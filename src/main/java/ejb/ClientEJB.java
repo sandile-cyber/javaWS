@@ -29,45 +29,55 @@ public class ClientEJB {
 	
 	
     public ClientEJB() {
-       entityManagerFactory = Persistence.createEntityManagerFactory("client");
-       entityManager = entityManagerFactory.createEntityManager();
-    	// TODO Auto-generated constructor stub
+   
+    }
+    
+    private void closeEM() {
+    	this.entityManager.close();
+    	this.entityManager.close();
+    }
+    
+    private void openEM() {
+    	  entityManagerFactory = Persistence.createEntityManagerFactory("client");
+          entityManager = entityManagerFactory.createEntityManager();
     }
      
     public void updateClient(int id, String name) {
-    	
+    	openEM();
     	Client client = new Client();
     	client.setId(id);
     	client.setName(name);
 		entityManager.merge(client);
+		closeEM();
 		
 	}
 	
     public void removeClient(int id) {
-    	
+    	openEM();
     	Client client  = entityManager.find(Client.class, id);
     	entityManager.remove(client);
+    	closeEM();
     
     }
     
     public List<Client> getAll(){
-    
-    	Query q = entityManager.createQuery("select c from client c");
+    	openEM();
+    	Query q = entityManager.createQuery("select c from Client c");
     	
     	return (List<Client>) q.getResultList();
     
     }
     
     public Client getClient(int id) {
-    	
+    	openEM();
     	Client client = entityManager.find(Client.class, id);
-    	
+    	closeEM();
     	return client;
     	
     }
     
     public void addClient(int id, String name) {
-    	
+    	openEM();
     	Client client = new Client();
     	client.setId(id);
     	client.setName(name);
@@ -75,6 +85,7 @@ public class ClientEJB {
     	entityManager.getTransaction().begin();
     	entityManager.persist(client);
     	entityManager.getTransaction().commit();
+    	closeEM();
     	
     }
     

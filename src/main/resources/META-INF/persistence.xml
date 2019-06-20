@@ -7,8 +7,8 @@
 
 	<persistence-unit name="client">
 	
-		<class>jpa.Client</class>
-		
+	    <class>jpa.Client</class> 
+	    		
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
