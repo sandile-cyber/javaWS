@@ -2,8 +2,8 @@ package ejb;
 
 import java.util.List;
 
+import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,6 +16,7 @@ import jpa.Client;
  */
 
 @Stateless
+@ManagedBean	
 public class ClientEJB {
 
     /**
@@ -28,7 +29,7 @@ public class ClientEJB {
 	
 	
     public ClientEJB() {
-       entityManagerFactory = Persistence.createEntityManagerFactory("conference");
+       entityManagerFactory = Persistence.createEntityManagerFactory("client");
        entityManager = entityManagerFactory.createEntityManager();
     	// TODO Auto-generated constructor stub
     }

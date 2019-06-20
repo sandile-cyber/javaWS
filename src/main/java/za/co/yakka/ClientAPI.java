@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import ejb.ClientEJB;
 import jpa.Client;
 
-
 @Path("/client")
 public class ClientAPI {
 
@@ -23,7 +22,6 @@ public class ClientAPI {
 		@Produces(MediaType.APPLICATION_JSON)
 		@Path("getClient/{id}")
 		public Client getClient(@PathParam("id") int id) {
-			
 			return clientEJB.getClient(id);
 		
 		}
@@ -32,7 +30,7 @@ public class ClientAPI {
 		@Produces(MediaType.APPLICATION_JSON)
 		@Path("helloWorld")
 		public String helloWorld() {
-			return "Hello world";
+			return "Hello world \n";
 		}
 		
 		@GET
