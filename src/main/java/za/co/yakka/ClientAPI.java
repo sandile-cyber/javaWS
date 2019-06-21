@@ -23,7 +23,6 @@ public class ClientAPI {
 		@Path("getClient/{id}")
 		public Client getClient(@PathParam("id") int id) {
 			return clientEJB.getClient(id);
-		
 		}
 		
 		@GET

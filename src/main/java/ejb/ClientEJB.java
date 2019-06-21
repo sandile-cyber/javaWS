@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+
 import jpa.Client;
 
 /**
@@ -27,14 +28,13 @@ public class ClientEJB {
 	EntityManager entityManager;
 	EntityManagerFactory entityManagerFactory;
 	
-	
     public ClientEJB() {
-   
+    	
     }
     
     private void closeEM() {
     	this.entityManager.close();
-    	this.entityManager.close();
+    	this.entityManagerFactory.close();
     }
     
     private void openEM() {
@@ -71,6 +71,9 @@ public class ClientEJB {
     public Client getClient(int id) {
     	openEM();
     	Client client = entityManager.find(Client.class, id);
+    	if (client == null) {
+    		
+    	}
     	closeEM();
     	return client;
     	
@@ -85,7 +88,10 @@ public class ClientEJB {
     	entityManager.getTransaction().begin();
     	entityManager.persist(client);
     	entityManager.getTransaction().commit();
+    	
     	closeEM();
+    	
+    	System.out.println("Client added...");
     	
     }
     

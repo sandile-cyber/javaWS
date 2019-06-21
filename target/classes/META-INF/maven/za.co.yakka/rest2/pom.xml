@@ -18,8 +18,6 @@
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
-
-
   <dependencies>
 	
 	    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -30,7 +28,7 @@
 	    <scope>runtime</scope>
 	</dependency>
 	    
-	    
+	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 
     <dependency>
       <groupId>junit</groupId>
