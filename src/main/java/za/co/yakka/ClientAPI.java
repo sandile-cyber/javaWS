@@ -72,14 +72,35 @@ public class ClientAPI {
 		String results;
 		StringBuffer response = null;
 
+		response = invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
+		
+		System.out.println("This is what is going on here");
+		if (response != null) {
+			
+			System.out.println("response is not nulls");
+			return parseJSONObject(response);
+
+		}
+
+		return null;
+
+	}
+	
+	private StringBuffer invokeAPI(String inputUrl) {
+		
+		String results;
+		StringBuffer response = null;
+
 		try {
 			// Changed to new Currency API service
-			URL url = new URL("https://api.exchangeratesapi.io/latest?base=GBP");
+			URL url = new URL(inputUrl);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			int responseCode = connection.getResponseCode();
-			System.out.println("The response code is "+ responseCode);
-			if ((responseCode >= 200) && (responseCode < 300)) {
+			
+			System.out.println("Response Code: "+ responseCode);
+			
+			if ((responseCode >= 200) && (responseCode < 400)) {
 
 				BufferedReader inputBufferedReader = new BufferedReader(
 						new InputStreamReader(connection.getInputStream()));
@@ -88,7 +109,7 @@ public class ClientAPI {
 
 				while ((results = inputBufferedReader.readLine()) != null) {
 					response.append(results);
-				}
+					}
 
 				inputBufferedReader.close();
 
@@ -98,17 +119,34 @@ public class ClientAPI {
 			e.printStackTrace();
 		}
 		
-		System.out.println("This is what is going on here");
-		if (response != null) {
-			System.out.println("response is not nulls");
-			return parseJSONObject(response);
-
-		}
-
-		return null;
-
+		return response;
 	}
-
+	
+	@POST
+	@Path("/getExchangeRateQuote")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getExchangeRateQuote(
+			@QueryParam("id") String id,
+			@QueryParam("sourceCurrency") String sourceCurrency,
+			@QueryParam("targetCurrency") String targetCurrency,
+			@QueryParam("sourceAmount") String sourceAmount){
+		
+		StringBuffer response = invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
+								+ sourceCurrency + ","
+								+ targetCurrency);
+		
+		JSONObject responseJSONObject = new JSONObject(response.toString());
+		JSONObject exchangeRates = (JSONObject) responseJSONObject.get("rates");
+		
+		List<String> output = new ArrayList<>();
+		double exchangeRate = exchangeRates.getDouble(targetCurrency);
+		output.add(String.valueOf(exchangeRate));
+		output.add(String.valueOf(exchangeRate * Double.parseDouble(sourceAmount)));
+		
+		
+		return output ;
+	}
+	
 	private List<String> parseJSONObject(StringBuffer apiResponse) {
 
 		JSONObject responseJSONObject = new JSONObject(apiResponse.toString());
@@ -125,5 +163,6 @@ public class ClientAPI {
 		return keyList;
 
 	}
+
 
 }
