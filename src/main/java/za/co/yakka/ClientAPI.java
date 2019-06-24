@@ -1,11 +1,6 @@
 package za.co.yakka;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,9 +21,22 @@ import jpa.Client;
 @Path("/client")
 public class ClientAPI {
 
+
 	@Inject
 	ClientEJB clientEJB;
 
+
+	APIUtil utilities;
+
+	
+	public ClientAPI() {
+		super();
+		// TODO Auto-generated constructor stub
+		utilities = new APIUtil();
+		
+	}
+	
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("getClient/{id}")
@@ -72,54 +80,18 @@ public class ClientAPI {
 		String results;
 		StringBuffer response = null;
 
-		response = invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
+		response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
 		
 		System.out.println("This is what is going on here");
 		if (response != null) {
 			
 			System.out.println("response is not nulls");
-			return parseJSONObject(response);
+			return utilities.parseJSONObject(response);
 
 		}
 
 		return null;
 
-	}
-	
-	private StringBuffer invokeAPI(String inputUrl) {
-		
-		String results;
-		StringBuffer response = null;
-
-		try {
-			// Changed to new Currency API service
-			URL url = new URL(inputUrl);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			int responseCode = connection.getResponseCode();
-			
-			System.out.println("Response Code: "+ responseCode);
-			
-			if ((responseCode >= 200) && (responseCode < 400)) {
-
-				BufferedReader inputBufferedReader = new BufferedReader(
-						new InputStreamReader(connection.getInputStream()));
-
-				response = new StringBuffer();
-
-				while ((results = inputBufferedReader.readLine()) != null) {
-					response.append(results);
-					}
-
-				inputBufferedReader.close();
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return response;
 	}
 	
 	@POST
@@ -131,52 +103,13 @@ public class ClientAPI {
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String sourceAmount){
 		
-		StringBuffer response = invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
+		StringBuffer responseBuffer = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
 								+ sourceCurrency + ","
 								+ targetCurrency);
 		
-		JSONObject responseJSONObject = new JSONObject(response.toString());
-		JSONObject exchangeRates = (JSONObject) responseJSONObject.get("rates");
-		
-		double sourceCurrencyValue = exchangeRates.getDouble(sourceCurrency);
-		double targetCurrencyValue = exchangeRates.getDouble(targetCurrency);
-		double sourceAmountD = Double.parseDouble(sourceAmount);
-
-		List<Double> output = new ArrayList<>();
-		
-		if(sourceCurrencyValue < targetCurrencyValue ) {
-			output.add(targetCurrencyValue);
-			System.out.println(" &&& "+ sourceAmountD * targetCurrencyValue);
-			output.add(sourceAmountD * targetCurrencyValue);
-		}
-		else if(sourceCurrencyValue > targetCurrencyValue) {
-			output.add(targetCurrencyValue);
-			System.out.println(" %%% " + sourceAmountD / sourceCurrencyValue);
-			output.add(sourceAmountD / sourceCurrencyValue);
-
-		}else {
-			output.add(1.);
-			output.add(1.);
-		}
-		
-		return output;
+		return utilities.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
 	}
 	
-	private List<String> parseJSONObject(StringBuffer apiResponse) {
-
-		JSONObject responseJSONObject = new JSONObject(apiResponse.toString());
-		JSONObject currencyCodes = (JSONObject) responseJSONObject.get("rates");
-
-		Iterator keyIterator = currencyCodes.keys();
-		List<String> keyList = new ArrayList<String>();
-
-		while (keyIterator.hasNext()) {
-			String key = (String) keyIterator.next();
-			keyList.add(key);
-		}
-
-		return keyList;
-
-	}
+	
 
 }

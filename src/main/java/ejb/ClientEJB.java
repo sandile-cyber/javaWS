@@ -17,7 +17,6 @@ import jpa.Client;
  */
 
 @Stateless
-@ManagedBean	
 public class ClientEJB {
 
     /**
@@ -55,9 +54,11 @@ public class ClientEJB {
     		
     		entityTransaction.commit();
     	}
+    	
     	catch(Exception e){
     		e.printStackTrace();
     	}
+    	
     	finally {
     		closeEM();
     	}
@@ -85,9 +86,11 @@ public class ClientEJB {
     public Client getClient(int id) {
     	openEM();
     	Client client = entityManager.find(Client.class, id);
+    	
     	if (client == null) {
     		return null;
     	}
+    	
     	closeEM();
     	
     	System.out.println("Client Returned");
