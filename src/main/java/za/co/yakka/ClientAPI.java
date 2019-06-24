@@ -73,12 +73,12 @@ public class ClientAPI {
 		StringBuffer response = null;
 
 		try {
-
-			URL url = new URL("http://apilayer.net/api/list?access_key=55475920264d75362b9d74b7a2ea3c3b");
+			// Changed to new Currency API service
+			URL url = new URL("https://api.exchangeratesapi.io/latest?base=GBP");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			int responseCode = connection.getResponseCode();
-
+			System.out.println("The response code is "+ responseCode);
 			if ((responseCode >= 200) && (responseCode < 300)) {
 
 				BufferedReader inputBufferedReader = new BufferedReader(
@@ -97,9 +97,10 @@ public class ClientAPI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		System.out.println("This is what is going on here");
 		if (response != null) {
-
+			System.out.println("response is not nulls");
 			return parseJSONObject(response);
 
 		}
@@ -111,7 +112,7 @@ public class ClientAPI {
 	private List<String> parseJSONObject(StringBuffer apiResponse) {
 
 		JSONObject responseJSONObject = new JSONObject(apiResponse.toString());
-		JSONObject currencyCodes = (JSONObject) responseJSONObject.get("currencies");
+		JSONObject currencyCodes = (JSONObject) responseJSONObject.get("rates");
 
 		Iterator keyIterator = currencyCodes.keys();
 		List<String> keyList = new ArrayList<String>();
