@@ -25,5 +25,4 @@ public class ClientApplication extends Application {
 		Set<Object> singletons = new HashSet<>();
 		return singletons;
 	}
-
 }

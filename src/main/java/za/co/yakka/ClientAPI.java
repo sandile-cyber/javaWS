@@ -125,7 +125,7 @@ public class ClientAPI {
 	@POST
 	@Path("/getExchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getExchangeRateQuote(
+	public List<Double> getExchangeRateQuote(
 			@QueryParam("id") String id,
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,
@@ -138,13 +138,28 @@ public class ClientAPI {
 		JSONObject responseJSONObject = new JSONObject(response.toString());
 		JSONObject exchangeRates = (JSONObject) responseJSONObject.get("rates");
 		
-		List<String> output = new ArrayList<>();
-		double exchangeRate = exchangeRates.getDouble(targetCurrency);
-		output.add(String.valueOf(exchangeRate));
-		output.add(String.valueOf(exchangeRate * Double.parseDouble(sourceAmount)));
+		double sourceCurrencyValue = exchangeRates.getDouble(sourceCurrency);
+		double targetCurrencyValue = exchangeRates.getDouble(targetCurrency);
+		double sourceAmountD = Double.parseDouble(sourceAmount);
+
+		List<Double> output = new ArrayList<>();
 		
+		if(sourceCurrencyValue < targetCurrencyValue ) {
+			output.add(targetCurrencyValue);
+			System.out.println(" &&& "+ sourceAmountD * targetCurrencyValue);
+			output.add(sourceAmountD * targetCurrencyValue);
+		}
+		else if(sourceCurrencyValue > targetCurrencyValue) {
+			output.add(targetCurrencyValue);
+			System.out.println(" %%% " + sourceAmountD / sourceCurrencyValue);
+			output.add(sourceAmountD / sourceCurrencyValue);
+
+		}else {
+			output.add(1.);
+			output.add(1.);
+		}
 		
-		return output ;
+		return output;
 	}
 	
 	private List<String> parseJSONObject(StringBuffer apiResponse) {
@@ -163,6 +178,5 @@ public class ClientAPI {
 		return keyList;
 
 	}
-
 
 }
