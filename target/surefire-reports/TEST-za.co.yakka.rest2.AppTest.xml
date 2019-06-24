@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="za.co.yakka.rest2.AppTest" time="0.017" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="za.co.yakka.rest2.AppTest" time="0.022" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -17,7 +17,7 @@
     <property name="user.country" value="ZA"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_211/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter9034907089255145180.jar /home/sandile/eclipse-workspace/rest2/target/surefire 2019-06-24T16-07-31_185-jvmRun1 surefire6243556327111652508tmp surefire_04661357147263731304tmp"/>
+    <property name="sun.java.command" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter1771673306761099498.jar /home/sandile/eclipse-workspace/rest2/target/surefire 2019-06-24T16-28-17_024-jvmRun1 surefire2464923408468656493tmp surefire_01169196568448056026tmp"/>
     <property name="surefire.test.class.path" value="/home/sandile/eclipse-workspace/rest2/target/test-classes:/home/sandile/eclipse-workspace/rest2/target/classes:/home/sandile/.m2/repository/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar:/home/sandile/.m2/repository/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar:/home/sandile/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/sandile/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/sandile/.m2/repository/javax/javaee-api/8.0/javaee-api-8.0.jar:/home/sandile/.m2/repository/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar:/home/sandile/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/home/sandile/.m2/repository/org/json/json/20180813/json-20180813.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/sandile"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter9034907089255145180.jar"/>
+    <property name="surefire.real.class.path" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter1771673306761099498.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/jdk1.8.0_211/jre/lib/resources.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/rt.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/sunrsasign.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jsse.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jce.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/charsets.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jfr.jar:/usr/lib/jvm/jdk1.8.0_211/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_211-b12"/>

@@ -61,7 +61,6 @@ public class APIUtil {
 			output.add(targetCurrencyValue);
 			output.add(sourceAmountD / sourceCurrencyValue);
 			
-
 		}else {
 			output.add(1.);
 			output.add(1.);
@@ -77,7 +76,6 @@ public class APIUtil {
 			StringBuffer response = null;
 	
 			try {
-				// Changed to new Currency API service
 				URL url = new URL(inputUrl);
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 				connection.setRequestMethod("GET");

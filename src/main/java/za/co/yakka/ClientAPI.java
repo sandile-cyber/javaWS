@@ -82,10 +82,8 @@ public class ClientAPI {
 
 		response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
 		
-		System.out.println("This is what is going on here");
 		if (response != null) {
 			
-			System.out.println("response is not nulls");
 			return utilities.parseJSONObject(response);
 
 		}
