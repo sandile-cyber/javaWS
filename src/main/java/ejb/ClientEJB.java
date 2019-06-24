@@ -48,7 +48,7 @@ public class ClientEJB {
     	client.setName(name);
     	
     	try {
-    		EntityTransaction entityTransaction=entityManager.getTransaction();
+    		EntityTransaction entityTransaction = entityManager.getTransaction();
     		entityTransaction.begin();
     		
     		entityManager.merge(client);
@@ -97,6 +97,7 @@ public class ClientEJB {
     }
     
     public void addClient(int id, String name) {
+    	
     	openEM();
     	Client client = new Client();
     	client.setId(id);
@@ -112,6 +113,7 @@ public class ClientEJB {
     	catch(Exception e) {
     		e.printStackTrace();
     	}finally {
+    		closeEM();
     		System.out.println("Client added...");
     	}
     	

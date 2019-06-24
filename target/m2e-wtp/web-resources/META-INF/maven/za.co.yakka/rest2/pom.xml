@@ -7,6 +7,7 @@
   <groupId>za.co.yakka</groupId>
   <artifactId>rest2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
 
   <name>rest2</name>
   <!-- FIXME change it to the project's website -->
@@ -16,6 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+  	<failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
   <dependencies>
@@ -36,13 +38,6 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-	<dependency>
-	    <groupId>org.hibernate</groupId>
-	    <artifactId>hibernate-core</artifactId>
-	    <version>5.4.3.Final</version>
-	</dependency>
 
     <dependency>
 	    <groupId>javax</groupId>
@@ -51,6 +46,14 @@
 	    <scope>provided</scope>
 	</dependency>	
     
+				<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20180813</version>
+		</dependency> 
+				
+
   </dependencies>
 
   <build>
