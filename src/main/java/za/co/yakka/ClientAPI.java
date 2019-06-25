@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import Cache.Cache;
+import Cache.GuavaCache;
 import ejb.ClientEJB;
 import jpa.Client;
 
@@ -27,13 +27,13 @@ public class ClientAPI {
 
 
 	APIUtil utilities;
-	Cache cache;
+	GuavaCache guavaCache;
 
 	
 	public ClientAPI() {
 		super();
 		utilities = new APIUtil();
-		cache = new Cache();
+		guavaCache = new GuavaCache();
 		
 	}
 	
@@ -77,29 +77,10 @@ public class ClientAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getCurrencyCodes() {
 
-		String results;
-		StringBuffer response = null;
 		String key = "Currency";
-		List<String> currencyCodes;
-
-		if(cache.contains(key)) {
+		System.out.println("Just to be sure that it is the right thing :)");
 			
-			System.out.println("data is cached");
-			currencyCodes = cache.getValue(key);
-		
-		}
-		else {
-			
-			System.out.println("no data is cached retrieving from api and caching");
-			
-			response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
-			currencyCodes = utilities.parseJSONObject(response);
-		
-			System.out.println(cache.addEntry(key, currencyCodes));
-			
-		}
-			
-			return currencyCodes;
+			return guavaCache.getCurrencyCodes(key);
 
 	}
 	

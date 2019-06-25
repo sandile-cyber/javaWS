@@ -24,7 +24,7 @@ public class APIUtil {
 		JSONObject responseJSONObject = new JSONObject(apiResponse.toString());
 		JSONObject currencyCodes = (JSONObject) responseJSONObject.get("rates");
 
-		Iterator keyIterator = currencyCodes.keys();
+		Iterator<String> keyIterator = currencyCodes.keys();
 		List<String> keyList = new ArrayList<String>();
 
 		while (keyIterator.hasNext()) {
