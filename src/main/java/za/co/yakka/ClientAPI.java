@@ -1,8 +1,8 @@
 package za.co.yakka;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,12 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.json.JSONObject;
-
+import Cache.Cache;
 import ejb.ClientEJB;
 import jpa.Client;
 
 @Path("/client")
+@Stateful
 public class ClientAPI {
 
 
@@ -27,15 +27,15 @@ public class ClientAPI {
 
 
 	APIUtil utilities;
+	Cache cache;
 
 	
 	public ClientAPI() {
 		super();
-		// TODO Auto-generated constructor stub
 		utilities = new APIUtil();
+		cache = new Cache();
 		
 	}
-	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,16 +79,27 @@ public class ClientAPI {
 
 		String results;
 		StringBuffer response = null;
+		String key = "Currency";
+		List<String> currencyCodes;
 
-		response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
-		
-		if (response != null) {
+		if(cache.contains(key)) {
 			
-			return utilities.parseJSONObject(response);
-
+			System.out.println("data is cached");
+			currencyCodes = cache.getValue(key);
+		
 		}
-
-		return null;
+		else {
+			
+			System.out.println("no data is cached retrieving from api and caching");
+			
+			response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
+			currencyCodes = utilities.parseJSONObject(response);
+		
+			System.out.println(cache.addEntry(key, currencyCodes));
+			
+		}
+			
+			return currencyCodes;
 
 	}
 	
@@ -108,6 +119,4 @@ public class ClientAPI {
 		return utilities.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
 	}
 	
-	
-
 }
