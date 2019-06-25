@@ -19,14 +19,13 @@ public class GuavaCache {
 		
 		
 		currencyCodes = CacheBuilder.newBuilder()
-				.maximumSize(1000)
 				.build(new CacheLoader<String, List<String>>(){
 			
 					@Override
 					public List<String> load(String key) throws Exception {
 						
 						StringBuffer response = null;
-						
+						System.out.println("fetching data from the net");
 						List<String> currencyCodes;
 
 						response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
