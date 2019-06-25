@@ -30,19 +30,19 @@ public class ClientEJB {
     	
     }
     
-    private void closeEM() {
+    private void closeEntityManagerConnection() {
     	this.entityManager.close();
     	this.entityManagerFactory.close();
     }
     
-    private void openEM() {
+    private void openEntityManagerConnection() {
     	  entityManagerFactory = Persistence.createEntityManagerFactory("client");
           entityManager = entityManagerFactory.createEntityManager();
     }
      
     public void updateClient(int id, String name) {
     	Client client = getClient(id);
-    	openEM();
+    	openEntityManagerConnection();
     	client.setId(id);
     	client.setName(name);
     	
@@ -60,23 +60,23 @@ public class ClientEJB {
     	}
     	
     	finally {
-    		closeEM();
+    		closeEntityManagerConnection();
     	}
 				
 	}
 	
     public void removeClient(int id) {
     
-    	openEM();
+    	openEntityManagerConnection();
     	Client client  = entityManager.find(Client.class, id);
     	entityManager.remove(client);
-    	closeEM();
+    	closeEntityManagerConnection();
     
     }
     
     public List<Client> getAll(){
     	
-    	openEM();
+    	openEntityManagerConnection();
     	Query q = entityManager.createQuery("select c from Client c");
     	
     	return (List<Client>) q.getResultList();
@@ -84,14 +84,14 @@ public class ClientEJB {
     }
     
     public Client getClient(int id) {
-    	openEM();
+    	openEntityManagerConnection();
     	Client client = entityManager.find(Client.class, id);
     	
     	if (client == null) {
     		return null;
     	}
     	
-    	closeEM();
+    	closeEntityManagerConnection();
     	
     	System.out.println("Client Returned");
     	
@@ -101,7 +101,7 @@ public class ClientEJB {
     
     public void addClient(int id, String name) {
     	
-    	openEM();
+    	openEntityManagerConnection();
     	Client client = new Client();
     	client.setId(id);
     	client.setName(name);
@@ -116,7 +116,7 @@ public class ClientEJB {
     	catch(Exception e) {
     		e.printStackTrace();
     	}finally {
-    		closeEM();
+    		closeEntityManagerConnection();
     		System.out.println("Client added...");
     	}
     	
