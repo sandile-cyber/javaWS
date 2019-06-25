@@ -2,7 +2,7 @@
 
 Generic Service endpoint:
 
-: http://localhost:9080/v2/api/client/<intended action>
+: http://localhost:9080/v2/api/client/\<intended action\>
 
 * actions:
     * addClient(client id, client name)
