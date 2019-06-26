@@ -16,25 +16,25 @@ import javax.ws.rs.core.MediaType;
 import Cache.GuavaCache;
 import ejb.ClientEJB;
 import jpa.Client;
+import za.co.yakka.APIUtil;
 
 @Path("/client")
 @Stateful
 public class ClientAPI {
 
-
 	@Inject
 	ClientEJB clientEJB;
 
-
 	APIUtil utilities;
 	GuavaCache guavaCache;
-
 	
+	ExchangeRateManager exchangeRateManager;
+
 	public ClientAPI() {
 		super();
 		utilities = new APIUtil();
-		guavaCache = new GuavaCache();
-		
+		guavaCache = new GuavaCache();		
+		exchangeRateManager = new ExchangeRateManager();
 	}
 	
 	@GET
@@ -78,8 +78,7 @@ public class ClientAPI {
 	public List<String> getCurrencyCodes() {
 
 		String key = "Currency";
-		System.out.println("Just to be sure that it is the right thing :)");
-			
+	
 			return guavaCache.getCurrencyCodes(key);
 
 	}
@@ -100,4 +99,15 @@ public class ClientAPI {
 		return utilities.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
 	}
 	
+	@POST
+	@Path("/getAdjustedExchangeRate")
+	@Produces(MediaType.APPLICATION_JSON)
+	public double getAdjustedExchangeRate(
+			@QueryParam("id") String id,
+			@QueryParam("sourceCurrency") String sourceCurrency,
+			@QueryParam("targetCurrency") String targetCurrency,
+			@QueryParam("sourceAmount") String sourceAmount){
+		
+		return exchangeRateManager.adjustRate(id, sourceCurrency, targetCurrency, sourceAmount );
+	}
 }

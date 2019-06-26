@@ -7,7 +7,8 @@
 
 	<persistence-unit name="client">
 	
-	    <class>jpa.Client</class> 
+	    <class>jpa.Client</class>
+	    <class>jpa.CurrencyAdjustment</class> 
 	    		
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />

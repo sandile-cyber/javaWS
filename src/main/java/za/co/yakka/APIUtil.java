@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
 
 import org.json.JSONObject;
 
-@Stateless
+
 public class APIUtil {
 		
 	public APIUtil() {

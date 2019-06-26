@@ -47,12 +47,14 @@ public class ClientEJB {
     	client.setName(name);
     	
     	try {
+    		
     		EntityTransaction entityTransaction = entityManager.getTransaction();
     		entityTransaction.begin();
     		
     		entityManager.merge(client);
     		
     		entityTransaction.commit();
+    		
     	}
     	
     	catch(Exception e){
