@@ -1,43 +1,26 @@
 package ejb;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import jpa.CurrencyAdjustment;
+import utilities.DbManager;
 
-@Stateless
 public class ExchangeRateAdjustmentBean {
 
+	DbManager dbManager;
 	
-	EntityManager entityManager;
-	EntityManagerFactory entityManagerFactory;
-	
-    private void closeEntityManagerConnection() {
-    	
-    	this.entityManager.close();
-    	this.entityManagerFactory.close();
-    
-    }
-    
-    private void openEntityManagerConnection() {
-    	try {
-    	  entityManagerFactory = Persistence.createEntityManagerFactory("client");
-          entityManager = entityManagerFactory.createEntityManager();
-    	}
-    	catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	}
-	
+	public ExchangeRateAdjustmentBean() {
+		super();
+		dbManager = DbManager.getInstance();
+	}
+
 	public double getAdjustmentRate(String key){
-		openEntityManagerConnection();
-		CurrencyAdjustment ca = entityManager.find(CurrencyAdjustment.class, key);
-		closeEntityManagerConnection();
+		
+		String persistenceUnit = "client";
+
+		dbManager.openEntityManagerConnection(persistenceUnit);
+		CurrencyAdjustment ca = dbManager.getEntityManager().find(CurrencyAdjustment.class, key);
+		dbManager.closeEntityManagerConnection();
 		
 		return ca.getAdjustmentPercentage();
 	
 	}
-	
 }

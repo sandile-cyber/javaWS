@@ -6,15 +6,15 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import za.co.yakka.APIUtil;
+import utilities.ApiUtils;
 
 public class GuavaCache {
 
 	LoadingCache<String, List<String>> currencyCodes;
-	APIUtil utilities;
+	ApiUtils utilities;
 	public GuavaCache() {
 		super();
-		utilities = new APIUtil();
+		utilities = new ApiUtils();
 		
 		currencyCodes = CacheBuilder.newBuilder()
 				.build(new CacheLoader<String, List<String>>(){

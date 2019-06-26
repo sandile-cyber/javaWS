@@ -6,7 +6,7 @@ import ejb.ExchangeRateAdjustmentBean;
 
 public class ExchangeRateManager {
 
-	
+	@Inject
 	ExchangeRateAdjustmentBean exRateAdj; 
 	
 	public ExchangeRateManager() {

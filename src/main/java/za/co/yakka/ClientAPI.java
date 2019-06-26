@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import Cache.GuavaCache;
 import ejb.ClientEJB;
 import jpa.Client;
-import za.co.yakka.APIUtil;
+import utilities.ApiUtils;
 
 @Path("/client")
 @Stateful
@@ -25,14 +25,14 @@ public class ClientAPI {
 	@Inject
 	ClientEJB clientEJB;
 
-	APIUtil utilities;
+	ApiUtils utilities;
 	GuavaCache guavaCache;
 	
 	ExchangeRateManager exchangeRateManager;
 
 	public ClientAPI() {
 		super();
-		utilities = new APIUtil();
+		utilities = new ApiUtils();
 		guavaCache = new GuavaCache();		
 		exchangeRateManager = new ExchangeRateManager();
 	}

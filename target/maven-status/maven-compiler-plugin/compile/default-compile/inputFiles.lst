@@ -1,9 +1,10 @@
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/APIUtil.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ExchangeRateManager.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/jpa/CurrencyAdjustment.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/utilities/DbManager.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ClientApplication.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/Cache/GuavaCache.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/jpa/Client.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/ejb/ClientEJB.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ClientAPI.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/utilities/ApiUtils.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/ejb/ExchangeRateAdjustmentBean.java

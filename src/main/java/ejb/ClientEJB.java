@@ -2,15 +2,12 @@ package ejb;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import jpa.Client;
+import utilities.DbManager;
 
 /**
  * Session Bean implementation class ClientBean
@@ -23,35 +20,27 @@ public class ClientEJB {
      * Default constructor. 
      */
 
-	EntityManager entityManager;
-	EntityManagerFactory entityManagerFactory;
+	DbManager dbManager;
+	String persistenceUnit;
 	
     public ClientEJB() {
-    	
-    }
-    
-    private void closeEntityManagerConnection() {
-    	this.entityManager.close();
-    	this.entityManagerFactory.close();
-    }
-    
-    private void openEntityManagerConnection() {
-    	  entityManagerFactory = Persistence.createEntityManagerFactory("client");
-          entityManager = entityManagerFactory.createEntityManager();
+    	dbManager = DbManager.getInstance();
+    	persistenceUnit = "client";
+
     }
      
     public void updateClient(int id, String name) {
     	Client client = getClient(id);
-    	openEntityManagerConnection();
+    	dbManager.openEntityManagerConnection(persistenceUnit);
     	client.setId(id);
     	client.setName(name);
     	
     	try {
     		
-    		EntityTransaction entityTransaction = entityManager.getTransaction();
+    		EntityTransaction entityTransaction = dbManager.getEntityManager().getTransaction();
     		entityTransaction.begin();
     		
-    		entityManager.merge(client);
+    		dbManager.getEntityManager().merge(client);
     		
     		entityTransaction.commit();
     		
@@ -62,38 +51,38 @@ public class ClientEJB {
     	}
     	
     	finally {
-    		closeEntityManagerConnection();
+    		dbManager.closeEntityManagerConnection();
     	}
 				
 	}
 	
     public void removeClient(int id) {
     
-    	openEntityManagerConnection();
-    	Client client  = entityManager.find(Client.class, id);
-    	entityManager.remove(client);
-    	closeEntityManagerConnection();
+    	dbManager.openEntityManagerConnection(persistenceUnit);
+    	Client client  = dbManager.getEntityManager().find(Client.class, id);
+    	dbManager.getEntityManager().remove(client);
+    	dbManager.closeEntityManagerConnection();
     
     }
     
     public List<Client> getAll(){
     	
-    	openEntityManagerConnection();
-    	Query q = entityManager.createQuery("select c from Client c");
+    	dbManager.openEntityManagerConnection(persistenceUnit);
+    	Query q = dbManager.getEntityManager().createQuery("select c from Client c");
     	
     	return (List<Client>) q.getResultList();
     
     }
     
     public Client getClient(int id) {
-    	openEntityManagerConnection();
-    	Client client = entityManager.find(Client.class, id);
+    	dbManager.openEntityManagerConnection(persistenceUnit);
+    	Client client = dbManager.getEntityManager().find(Client.class, id);
     	
     	if (client == null) {
     		return null;
     	}
     	
-    	closeEntityManagerConnection();
+    	dbManager.closeEntityManagerConnection();
     	
     	System.out.println("Client Returned");
     	
@@ -103,22 +92,22 @@ public class ClientEJB {
     
     public void addClient(int id, String name) {
     	
-    	openEntityManagerConnection();
+    	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = new Client();
     	client.setId(id);
     	client.setName(name);
     	
     	try {
     	
-	    	entityManager.getTransaction().begin();
-	    	entityManager.persist(client);
-	    	entityManager.getTransaction().commit();
+	    	dbManager.getEntityManager().getTransaction().begin();
+	    	dbManager.getEntityManager().persist(client);
+	    	dbManager.getEntityManager().getTransaction().commit();
     	
     	}
     	catch(Exception e) {
     		e.printStackTrace();
     	}finally {
-    		closeEntityManagerConnection();
+    		dbManager.closeEntityManagerConnection();
     		System.out.println("Client added...");
     	}
     	
