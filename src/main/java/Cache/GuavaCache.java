@@ -6,17 +6,15 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import za.co.yakka.APIUtil;
+import utilities.ApiUtils;
 
 public class GuavaCache {
 
 	LoadingCache<String, List<String>> currencyCodes;
-	APIUtil utilities;
+	ApiUtils utilities;
 	public GuavaCache() {
 		super();
-		String key = "Currency";
-		utilities = new APIUtil();
-		
+		utilities = new ApiUtils();
 		
 		currencyCodes = CacheBuilder.newBuilder()
 				.build(new CacheLoader<String, List<String>>(){
@@ -25,7 +23,6 @@ public class GuavaCache {
 					public List<String> load(String key) throws Exception {
 						
 						StringBuffer response = null;
-						System.out.println("fetching data from the net");
 						List<String> currencyCodes;
 
 						response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
@@ -51,6 +48,7 @@ public class GuavaCache {
 		
 		return null;
 	}
+	
 	
 	public void addCurrencyCodesList(String key, List<String> value) {
 		
