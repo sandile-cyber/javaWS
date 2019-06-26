@@ -1,8 +1,8 @@
 package za.co.yakka;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,12 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.json.JSONObject;
-
+import Cache.GuavaCache;
 import ejb.ClientEJB;
 import jpa.Client;
 
 @Path("/client")
+@Stateful
 public class ClientAPI {
 
 
@@ -27,15 +27,15 @@ public class ClientAPI {
 
 
 	APIUtil utilities;
+	GuavaCache guavaCache;
 
 	
 	public ClientAPI() {
 		super();
-		// TODO Auto-generated constructor stub
 		utilities = new APIUtil();
+		guavaCache = new GuavaCache();
 		
 	}
-	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -77,18 +77,10 @@ public class ClientAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getCurrencyCodes() {
 
-		String results;
-		StringBuffer response = null;
-
-		response = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?base=GBP");
-		
-		if (response != null) {
+		String key = "Currency";
+		System.out.println("Just to be sure that it is the right thing :)");
 			
-			return utilities.parseJSONObject(response);
-
-		}
-
-		return null;
+			return guavaCache.getCurrencyCodes(key);
 
 	}
 	
@@ -108,6 +100,4 @@ public class ClientAPI {
 		return utilities.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
 	}
 	
-	
-
 }

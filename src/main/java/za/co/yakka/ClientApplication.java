@@ -19,10 +19,4 @@ public class ClientApplication extends Application {
 		return classes;
 		
 	}
-	
-	@Override
-	public Set<Object> getSingletons(){
-		Set<Object> singletons = new HashSet<>();
-		return singletons;
-	}
 }

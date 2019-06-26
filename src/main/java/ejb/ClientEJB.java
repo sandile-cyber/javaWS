@@ -108,9 +108,9 @@ public class ClientEJB {
     	
     	try {
     	
-    	entityManager.getTransaction().begin();
-    	entityManager.persist(client);
-    	entityManager.getTransaction().commit();
+	    	entityManager.getTransaction().begin();
+	    	entityManager.persist(client);
+	    	entityManager.getTransaction().commit();
     	
     	}
     	catch(Exception e) {
