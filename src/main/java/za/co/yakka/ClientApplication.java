@@ -14,7 +14,7 @@ public class ClientApplication extends Application {
 	public Set<Class<?>> getClasses() {
 
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		classes.add(ClientAPI.class);
+		classes.add(ClientApi.class);
 		
 		return classes;
 		

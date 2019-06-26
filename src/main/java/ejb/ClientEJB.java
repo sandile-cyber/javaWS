@@ -26,7 +26,6 @@ public class ClientEJB {
     public ClientEJB() {
     	dbManager = DbManager.getInstance();
     	persistenceUnit = "client";
-
     }
      
     public void updateClient(int id, String name) {
@@ -75,6 +74,7 @@ public class ClientEJB {
     }
     
     public Client getClient(int id) {
+    	
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = dbManager.getEntityManager().find(Client.class, id);
     	
@@ -107,10 +107,11 @@ public class ClientEJB {
     	catch(Exception e) {
     		e.printStackTrace();
     	}finally {
+    	
     		dbManager.closeEntityManagerConnection();
     		System.out.println("Client added...");
-    	}
     	
+    	}
     }
    
 }

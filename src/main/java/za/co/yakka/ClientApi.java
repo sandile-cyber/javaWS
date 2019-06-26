@@ -20,7 +20,7 @@ import utilities.ApiUtils;
 
 @Path("/client")
 @Stateful
-public class ClientAPI {
+public class ClientApi {
 
 	@Inject
 	ClientEJB clientEJB;
@@ -30,7 +30,7 @@ public class ClientAPI {
 	
 	ExchangeRateManager exchangeRateManager;
 
-	public ClientAPI() {
+	public ClientApi() {
 		super();
 		utilities = new ApiUtils();
 		guavaCache = new GuavaCache();		
@@ -79,7 +79,7 @@ public class ClientAPI {
 
 		String key = "Currency";
 	
-			return guavaCache.getCurrencyCodes(key);
+		return guavaCache.getCurrencyCodes(key);
 
 	}
 	
