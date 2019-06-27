@@ -47,6 +47,8 @@ public class ApiUtils {
 		double sourceCurrencyValue = exchangeRates.getDouble(sourceCurrency);
 		double targetCurrencyValue = exchangeRates.getDouble(targetCurrency);
 		double sourceAmountD = Double.parseDouble(sourceAmount);
+		
+		System.out.println("source rate: "+ sourceCurrencyValue + "target: " + targetCurrencyValue);
 
 		List<Double> output = new ArrayList<>();
 		

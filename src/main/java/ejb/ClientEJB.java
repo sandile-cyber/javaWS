@@ -69,7 +69,8 @@ public class ClientEJB {
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Query q = dbManager.getEntityManager().createQuery("select c from Client c");
     	
-    	return (List<Client>) q.getResultList();
+    	List<Client> resultList = (List<Client>) q.getResultList();
+		return resultList;
     
     }
     

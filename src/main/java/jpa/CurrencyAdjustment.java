@@ -8,6 +8,7 @@ import javax.persistence.*;
  * The persistent class for the CurrencyAdjustments database table.
  * 
  */
+
 @Entity
 @Table(name="CurrencyAdjustments")
 @NamedQuery(name="CurrencyAdjustment.findAll", query="SELECT c FROM CurrencyAdjustment c")

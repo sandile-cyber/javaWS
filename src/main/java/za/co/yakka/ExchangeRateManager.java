@@ -14,29 +14,22 @@ public class ExchangeRateManager {
 		exRateAdj = new ExchangeRateAdjustmentBean();
 	}
 	
-	public double adjustRate(String ClientId,
+	public double adjustmentRate(String ClientId,
 							 String sourceCurrency,
-							 String targetCurrency, String amount){
+							 String targetCurrency){
 		
 		double sourceCurrencyAdjustment = exRateAdj.getAdjustmentRate(sourceCurrency);
 		double targetCurrencyAdjustment = exRateAdj.getAdjustmentRate(targetCurrency);
 		
-		double amountd = Double.parseDouble(amount);
-		int ClientIdint = Integer.parseInt(amount);
+		int ClientIdint = Integer.parseInt(ClientId);
 		
 		if (sourceCurrencyAdjustment > targetCurrencyAdjustment) {
-		
-			System.out.println(sourceCurrencyAdjustment * ClientIdint);
-			System.out.println(amountd);
-			
-			return amountd + (sourceCurrencyAdjustment * ClientIdint);
+					
+			return + (sourceCurrencyAdjustment * ClientIdint);
 	
 		}
-
-		System.out.println(sourceCurrencyAdjustment * ClientIdint);
-		System.out.println(amountd);
 		
-		return amountd - (targetCurrencyAdjustment * ClientIdint);
+		return  - (targetCurrencyAdjustment * ClientIdint);
 		
 	}
 		

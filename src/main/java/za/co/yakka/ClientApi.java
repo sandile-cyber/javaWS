@@ -1,6 +1,8 @@
 package za.co.yakka;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
@@ -12,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
 
 import Cache.GuavaCache;
 import ejb.ClientEJB;
@@ -102,12 +106,23 @@ public class ClientApi {
 	@POST
 	@Path("/getAdjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public double getAdjustedExchangeRate(
+	public Map<String, Double> getAdjustedExchangeRate(
 			@QueryParam("id") String id,
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String sourceAmount){
+	
+		StringBuffer responseBuffer = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
+				+ sourceCurrency + ","
+				+ targetCurrency);
 		
-		return exchangeRateManager.adjustRate(id, sourceCurrency, targetCurrency, sourceAmount );
+		List<Double> nominalRate = utilities.exchangeRates( responseBuffer, sourceCurrency, targetCurrency, sourceAmount);
+		Map<String, Double> obj = new HashMap<String, Double>();
+		
+		obj.put("Exchange Rate", nominalRate.get(0));
+		obj.put("Nominal Exchanged Amount", nominalRate.get(1));
+		obj.put("Adjusted Exchange Amount", nominalRate.get(1) + exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency));
+		
+		return obj;
 	}
 }
