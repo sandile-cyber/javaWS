@@ -52,8 +52,9 @@ public class ClientApi {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("getClient/{id}")
+	@Path("client/{id}")
 	public Client getClient(@PathParam("id") int id) {
+
 		return clientEJB.getClient(id);
 	}
 
@@ -66,7 +67,7 @@ public class ClientApi {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getClientList")
+	@Path("/clientList")
 	public List<Client> getClientList() {
 
 		return clientEJB.getAll();
@@ -74,19 +75,19 @@ public class ClientApi {
 	}
 
 	@POST
-	@Path("/addClient")
+	@Path("/client")
 	public void addClient(@QueryParam("id") String id, @QueryParam("name") String name) {
 		clientEJB.addClient(Integer.parseInt(id), name);
 	}
 
 	@PUT
-	@Path("/updateClient")
+	@Path("/client")
 	public void updateClient(@QueryParam("id") String id, @QueryParam("name") String name) {
 		clientEJB.updateClient(Integer.parseInt(id), name);
 	}
 
 	@GET
-	@Path("/getCurrencyCodes")
+	@Path("/currencyCodes")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getCurrencyCodes() {
 
@@ -97,7 +98,7 @@ public class ClientApi {
 	}
 	
 	@POST
-	@Path("/getExchangeRateQuote")
+	@Path("/exchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Double> getExchangeRateQuote(
 			@QueryParam("id") String id,
@@ -113,7 +114,7 @@ public class ClientApi {
 	}
 	
 	@POST
-	@Path("/getAdjustedExchangeRate")
+	@Path("/adjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Map<String, Double> getAdjustedExchangeRate(
 			@QueryParam("id") String id,

@@ -24,11 +24,14 @@ public class ClientEJB {
 	String persistenceUnit;
 	
     public ClientEJB() {
+
     	dbManager = DbManager.getInstance();
     	persistenceUnit = "client";
+
     }
      
     public void updateClient(int id, String name) {
+
     	Client client = getClient(id);
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	client.setId(id);
@@ -84,9 +87,7 @@ public class ClientEJB {
     	}
     	
     	dbManager.closeEntityManagerConnection();
-    	
-    	System.out.println("Client Returned");
-    	
+
     	return client;
     	
     }
@@ -110,7 +111,6 @@ public class ClientEJB {
     	}finally {
     	
     		dbManager.closeEntityManagerConnection();
-    		System.out.println("Client added...");
     	
     	}
     }

@@ -4,9 +4,11 @@ jpa/CurrencyAdjustment.class
 ejb/ExchangeRateAdjustmentBean.class
 jpa/Client.class
 Cache/GuavaCache.class
+jpa/Quote.class
 Cache/GuavaCache$1.class
 za/co/yakka/ExchangeRateManager.class
 ejb/QuotePersistenceEJB.class
 za/co/yakka/MainApplication.class
+utilities/exchangeRateUtils.class
 utilities/DbManager.class
 ejb/ClientEJB.class
