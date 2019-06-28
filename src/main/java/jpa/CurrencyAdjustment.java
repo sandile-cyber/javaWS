@@ -15,12 +15,14 @@ import javax.persistence.*;
 public class CurrencyAdjustment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column
 	private float adjustmentPercentage;
 	
 	@Id
 	@Column(name="curr_code")
 	private String currCode;
 
+	
 	public CurrencyAdjustment() {
 	}
 

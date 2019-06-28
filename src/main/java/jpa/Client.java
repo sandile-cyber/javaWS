@@ -26,14 +26,14 @@ public class Client implements Serializable {
 	@Column(name="name")
 	private String name;
 
+	public Client() {
+		
+	}
+	
 	public int getId() {
 		return this.id;
 	}
 	
-	public Client() {
-		
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}

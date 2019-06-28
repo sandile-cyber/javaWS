@@ -1,0 +1,13 @@
+jpa/QuoteInfo.class
+za/co/yakka/ClientApi.class
+utilities/ApiUtils.class
+jpa/CurrencyAdjustment.class
+ejb/ExchangeRateAdjustmentBean.class
+jpa/Client.class
+Cache/GuavaCache.class
+Cache/GuavaCache$1.class
+za/co/yakka/ExchangeRateManager.class
+ejb/QuotePersistenceEJB.class
+za/co/yakka/MainApplication.class
+utilities/DbManager.class
+ejb/ClientEJB.class

@@ -29,8 +29,7 @@ public class DbManager {
     	}
     	catch(Exception e){
     		e.printStackTrace();
-    		}
-    	
+    		}	
     }
     
     public void closeEntityManagerConnection() {

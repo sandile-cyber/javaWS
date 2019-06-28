@@ -8,10 +8,12 @@
 	<persistence-unit name="client">
 	
 	    <class>jpa.Client</class>
-	    <class>jpa.CurrencyAdjustment</class> 
+	    <class>jpa.CurrencyAdjustment</class>
+	    <class>jpa.QuoteInfo</class>
+	    <class>jpa.Quote</class>
 	    		
 		<properties>
-			<property name="eclipselink.logging.level" value="FINEST" />
+			<!--  <property name="eclipselink.logging.level" value="FINEST" /> -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/TestDB" />
 			<property name="javax.persistence.jdbc.user" value="sandile" />

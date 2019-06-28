@@ -56,16 +56,21 @@ public class ApiUtils {
 			
 			output.add(targetCurrencyValue);
 			output.add(sourceAmountD * targetCurrencyValue);
+			output.add(sourceCurrencyValue);
 			
 		}
 		else if(sourceCurrencyValue > targetCurrencyValue) {
 			
 			output.add(targetCurrencyValue);
 			output.add(sourceAmountD / sourceCurrencyValue);
-			
+			output.add(sourceCurrencyValue);
+	
 		}else {
+			
 			output.add(1.);
 			output.add(1.);
+			output.add(1.);
+		
 		}
 		
 		return output;
