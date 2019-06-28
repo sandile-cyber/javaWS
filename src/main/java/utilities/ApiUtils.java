@@ -10,17 +10,25 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 
 public class ApiUtils {
-		
+	
+	static Logger logger;
+	
 	public ApiUtils() {
 		super();
+		
+		logger = Logger.getLogger(ApiUtils.class);
+		
 	}
 
 	public List<String> parseJSONObject(StringBuffer apiResponse) {
-
+		
+		logger.debug("Parsing String Object contained in string buffer");
+		
 		JSONObject responseJSONObject = new JSONObject(apiResponse.toString());
 		JSONObject currencyCodes = (JSONObject) responseJSONObject.get("rates");
 
@@ -35,50 +43,11 @@ public class ApiUtils {
 		return keyList;
 
 	}
-	
-	public List<Double> exchangeRates(StringBuffer apiResponseBuffer,
-			String sourceCurrency,
-			String targetCurrency,
-			String sourceAmount){
 		
-		JSONObject responseJSONObject = new JSONObject(apiResponseBuffer.toString());
-		JSONObject exchangeRates = (JSONObject) responseJSONObject.get("rates");
-		
-		double sourceCurrencyValue = exchangeRates.getDouble(sourceCurrency);
-		double targetCurrencyValue = exchangeRates.getDouble(targetCurrency);
-		double sourceAmountD = Double.parseDouble(sourceAmount);
-		
-		System.out.println("source rate: "+ sourceCurrencyValue + "target: " + targetCurrencyValue);
-
-		List<Double> output = new ArrayList<>();
-		
-		if(sourceCurrencyValue < targetCurrencyValue ) {
-			
-			output.add(targetCurrencyValue);
-			output.add(sourceAmountD * targetCurrencyValue);
-			output.add(sourceCurrencyValue);
-			
-		}
-		else if(sourceCurrencyValue > targetCurrencyValue) {
-			
-			output.add(targetCurrencyValue);
-			output.add(sourceAmountD / sourceCurrencyValue);
-			output.add(sourceCurrencyValue);
-	
-		}else {
-			
-			output.add(1.);
-			output.add(1.);
-			output.add(1.);
-		
-		}
-		
-		return output;
-	
-	}
-	
 	public StringBuffer invokeAPI(String inputUrl) {
-			
+		
+			logger.debug("Performing GET request to inputURL");
+		
 			String results;
 			StringBuffer response = null;
 	
@@ -88,7 +57,7 @@ public class ApiUtils {
 				connection.setRequestMethod("GET");
 				int responseCode = connection.getResponseCode();
 				
-				System.out.println("Response Code: "+ responseCode);
+				logger.debug("GET Response Code: "+ responseCode);
 				
 				if ((responseCode >= 200) && (responseCode < 400)) {
 	

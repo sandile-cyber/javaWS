@@ -9,7 +9,6 @@
 	
 	    <class>jpa.Client</class>
 	    <class>jpa.CurrencyAdjustment</class>
-	    <class>jpa.QuoteInfo</class>
 	    <class>jpa.Quote</class>
 	    		
 		<properties>

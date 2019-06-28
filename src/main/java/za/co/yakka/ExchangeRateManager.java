@@ -15,8 +15,8 @@ public class ExchangeRateManager {
 	}
 	
 	public double adjustmentRate(String ClientId,
-							 String sourceCurrency,
-							 String targetCurrency){
+							 	String sourceCurrency,
+							 	String targetCurrency){
 		
 		double sourceCurrencyAdjustment = exRateAdj.getAdjustmentRate(sourceCurrency);
 		double targetCurrencyAdjustment = exRateAdj.getAdjustmentRate(targetCurrency);
@@ -32,5 +32,6 @@ public class ExchangeRateManager {
 		return  - (targetCurrencyAdjustment * ClientIdint);
 		
 	}
-		
+	
+
 }

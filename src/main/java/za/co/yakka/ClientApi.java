@@ -16,11 +16,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import Cache.GuavaCache;
 import ejb.ClientEJB;
 import ejb.QuotePersistenceEJB;
 import jpa.Client;
 import utilities.ApiUtils;
+import utilities.exchangeRateUtils;
 
 @Path("/client")
 @Stateful
@@ -29,18 +32,22 @@ public class ClientApi {
 	@Inject
 	ClientEJB clientEJB;
 
-	ApiUtils utilities;
+	ApiUtils ApiUtilities;
 	GuavaCache guavaCache;
 	QuotePersistenceEJB quotePersistence;
+	exchangeRateUtils exRateUtils;
 	
 	ExchangeRateManager exchangeRateManager;
+	
+	static Logger logger = Logger.getLogger(ClientApi.class);
 
 	public ClientApi() {
 		super();
-		utilities = new ApiUtils();
+		ApiUtilities = new ApiUtils();
 		guavaCache = new GuavaCache();		
 		exchangeRateManager = new ExchangeRateManager();
 		quotePersistence = new QuotePersistenceEJB();
+		exRateUtils = new exchangeRateUtils();
 	}
 	
 	@GET
@@ -98,11 +105,11 @@ public class ClientApi {
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String sourceAmount){
 		
-		StringBuffer responseBuffer = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
-								+ sourceCurrency + ","
-								+ targetCurrency);
+		StringBuffer responseBuffer = ApiUtilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
+															+ sourceCurrency + ","
+															+ targetCurrency);
 		
-		return utilities.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
+		return exRateUtils.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
 	}
 	
 	@POST
@@ -114,15 +121,25 @@ public class ClientApi {
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String amount){
 	
-		StringBuffer responseBuffer = utilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
-				+ sourceCurrency + ","
-				+ targetCurrency);
+		StringBuffer responseBuffer = ApiUtilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
+															+ sourceCurrency + ","
+															+ targetCurrency);
 		
-		List<Double> nominalRate = utilities.exchangeRates( responseBuffer, sourceCurrency, targetCurrency, amount);
+		logger.debug(" Received response buffer from utilities ");
+		
+		List<Double> nominalRate = exRateUtils.exchangeRates(responseBuffer, 
+															sourceCurrency, 
+															targetCurrency, 
+															amount);
+		
+		logger.debug("Parsed response buffer and return nominal exchange rates");
+		
 		Map<String, Double> obj = new HashMap<String, Double>();
 		
 		double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 	
+		logger.debug("Calculated Currrency Adjustment Factor");
+		
 		UUID uuid = UUID.randomUUID();
 		String uuidString  = uuid.toString();
 		double sourceAmount = Double.parseDouble(amount);
@@ -136,6 +153,8 @@ public class ClientApi {
 											targetCurrencyRate, 
 											CAF, 
 											sourceAmount);
+		
+		logger.debug("Persisted Quote Information");
 		
 		obj.put("Exchange Rate", nominalRate.get(0));
 		obj.put("Nominal Exchanged Amount", nominalRate.get(1));

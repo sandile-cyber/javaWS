@@ -2,8 +2,9 @@ package ejb;
 
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
+
 import jpa.Quote;
-import jpa.QuoteInfo;
 import utilities.DbManager;
 
 @Stateless
@@ -12,12 +13,13 @@ public class QuotePersistenceEJB {
 	Quote qInfo;
 	DbManager dbManager;
 	String persistenceUnit;
+	static Logger logger4j;
 
 	public QuotePersistenceEJB() {
 		super();
 		persistenceUnit = "client";
 		dbManager = DbManager.getInstance();
-//		qInfo = new Quote();
+		 logger4j = Logger.getLogger(QuotePersistenceEJB.class);
 	}
 	
 	public void addQuoteInformation(	
@@ -32,13 +34,13 @@ public class QuotePersistenceEJB {
 			) {
 		
 		qInfo = new Quote(currencyAdjustmentFactor,
-								clientId,
-								amount,
-								sourceCurrencyCode,
-								sourceCurrencyRate,
-								targetCurrencyCode,
-								targetCurrencyRate,
-								uuid);
+							clientId,
+							amount,
+							sourceCurrencyCode,
+							sourceCurrencyRate,
+							targetCurrencyCode,
+							targetCurrencyRate,
+							uuid);
 
 		try {
 			
@@ -46,13 +48,17 @@ public class QuotePersistenceEJB {
 			dbManager.getEntityManager().getTransaction().begin();
 			dbManager.getEntityManager().persist(qInfo);
 			dbManager.getEntityManager().getTransaction().commit();
-		
+			logger4j.debug("Added quote to DB");
+			
 		}catch(Exception e) {
+			
 			e.printStackTrace();
+			
 		}finally {
 		
 			dbManager.closeEntityManagerConnection();
-			System.out.println("Quote stored...");
+			logger4j.info("Closed DB Connection");
+			
 	
 		}
 		
