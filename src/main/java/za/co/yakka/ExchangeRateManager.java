@@ -1,16 +1,12 @@
 package za.co.yakka;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import za.co.yakka.ejb.ExchangeRateAdjustmentEJB;
 import za.co.yakka.model.ResponseModel;
 import za.co.yakka.utilities.ExchangeRateApi;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Stateless
@@ -45,6 +41,7 @@ public class ExchangeRateManager {
 		double sourceAmountD = Double.parseDouble(sourceAmount);
 
 		if(sourceCurrencyValue < targetCurrencyValue ) {
+
 			response.setExchangeRate(targetCurrencyValue);
 			response.setTargetAmount(sourceAmountD * targetCurrencyValue);
 			response.setSourceCurrency(sourceCurrencyValue);
