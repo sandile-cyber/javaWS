@@ -3,11 +3,11 @@ package za.co.yakka.ejb;
 import za.co.yakka.jpa.CurrencyAdjustment;
 import za.co.yakka.utilities.DbManager;
 
-public class ExchangeRateAdjustmentBean {
+public class ExchangeRateAdjustmentEJB {
 
 	DbManager dbManager;
 	
-	public ExchangeRateAdjustmentBean() {
+	public ExchangeRateAdjustmentEJB() {
 		super();
 		dbManager = DbManager.getInstance();
 	}

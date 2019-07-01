@@ -1,11 +1,15 @@
 package za.co.yakka.ejb;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+import za.co.yakka.ExchangeRateManager;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.utilities.DbManager;
 
@@ -22,10 +26,20 @@ public class ClientEJB {
 
 	DbManager dbManager;
 	String persistenceUnit;
-	
-    public ClientEJB() {
+
+	@Inject
+	ExchangeRateManager exchangeRateManager;
+
+	@Inject
+	private QuotePersistenceEJB quotePersistence;
+
+	static Logger logger = Logger.getLogger(ClientEJB.class);
+
+
+	public ClientEJB() {
 
     	dbManager = DbManager.getInstance();
+
     	persistenceUnit = "client";
 
     }
@@ -97,13 +111,46 @@ public class ClientEJB {
 	    	dbManager.getEntityManager().getTransaction().commit();
     	
     	}
+
     	catch(Exception e) {
     		e.printStackTrace();
     	}finally {
-    	
     		dbManager.closeEntityManagerConnection();
-    	
     	}
+
+    }
+
+    public List<Double> getAdjustedExchangeRate(String id,
+												String sourceCurrency,
+												String targetCurrency,
+												String amount){
+
+    	List<Double> response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, amount);
+    	double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
+
+    	response.set(1, response.get(1) + CAF );
+
+
+		logger.debug("Calculated Currrency Adjustment Factor");
+
+		UUID uuid = UUID.randomUUID();
+		String uuidString  = uuid.toString();
+		double sourceAmount = Double.parseDouble(amount);
+		double targetCurrencyRate = response.get(0);
+		double sourceCurrencyRate = response.get(2);
+		int idInteger = Integer.parseInt(id);
+
+		quotePersistence.addQuoteInformation(uuidString, idInteger, sourceCurrency,
+											targetCurrency,
+											sourceCurrencyRate,
+											targetCurrencyRate,
+											CAF,
+											sourceAmount);
+
+		logger.debug("Persisted Quote Information...");
+
+    	return response;
+
     }
    
 }

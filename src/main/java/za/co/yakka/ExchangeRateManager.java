@@ -1,32 +1,31 @@
 package za.co.yakka;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import feign.Feign;
-import feign.codec.Decoder;
 import feign.gson.GsonDecoder;
-import za.co.yakka.ejb.ExchangeRateAdjustmentBean;
+import za.co.yakka.ejb.ExchangeRateAdjustmentEJB;
 import za.co.yakka.utilities.ExchangeRateApi;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Stateless
 public class ExchangeRateManager {
 
 	@Inject
-	ExchangeRateAdjustmentBean exRateAdj;
+	ExchangeRateAdjustmentEJB exRateAdj;
 
 	ExchangeRateApi exchangeRateService;
 	
 	public ExchangeRateManager() {
-		exRateAdj = new ExchangeRateAdjustmentBean();
+		exRateAdj = new ExchangeRateAdjustmentEJB();
 
 		exchangeRateService = Feign.builder()
 				.decoder(new GsonDecoder())
 				.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io");
-
-
 
 	}
 

@@ -16,12 +16,9 @@ public class QuotePersistenceEJB {
 	static Logger logger4j;
 
 	public QuotePersistenceEJB() {
-
-		super();
 		persistenceUnit = "client";
 		dbManager = DbManager.getInstance();
 		logger4j = Logger.getLogger(QuotePersistenceEJB.class);
-
 	}
 	
 	public void addQuoteInformation(	
@@ -60,8 +57,7 @@ public class QuotePersistenceEJB {
 		
 			dbManager.closeEntityManagerConnection();
 			logger4j.info("Closed DB Connection");
-			
-	
+
 		}
 		
 	}

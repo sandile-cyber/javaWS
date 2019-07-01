@@ -1,11 +1,9 @@
 package za.co.yakka.cache;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import feign.Feign;
-import feign.codec.Decoder;
 import feign.gson.GsonDecoder;
 import org.apache.log4j.Logger;
 
@@ -13,7 +11,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import za.co.yakka.utilities.ApiUtils;
 import za.co.yakka.utilities.ExchangeRateApi;
 
 public class GuavaCache {
