@@ -2,7 +2,7 @@ package za.co.yakka;
 
 import javax.inject.Inject;
 
-import ejb.ExchangeRateAdjustmentBean;
+import za.co.yakka.ejb.ExchangeRateAdjustmentBean;
 
 public class ExchangeRateManager {
 

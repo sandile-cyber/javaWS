@@ -7,9 +7,9 @@
 
 	<persistence-unit name="client">
 	
-	    <class>jpa.Client</class>
-	    <class>jpa.CurrencyAdjustment</class>
-	    <class>jpa.Quote</class>
+	    <class>za.co.yakka.jpa.Client</class>
+	    <class>za.co.yakka.jpa.CurrencyAdjustment</class>
+	    <class>za.co.yakka.jpa.Quote</class>
 	    		
 		<properties>
 			<!--  <property name="eclipselink.logging.level" value="FINEST" /> -->

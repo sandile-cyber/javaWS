@@ -1,9 +1,6 @@
 package za.co.yakka;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
@@ -16,14 +13,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import feign.Feign;
+import feign.codec.Decoder;
+import feign.gson.GsonDecoder;
 import org.apache.log4j.Logger;
 
-import Cache.GuavaCache;
-import ejb.ClientEJB;
-import ejb.QuotePersistenceEJB;
-import jpa.Client;
-import utilities.ApiUtils;
-import utilities.exchangeRateUtils;
+import za.co.yakka.cache.GuavaCache;
+import za.co.yakka.ejb.ClientEJB;
+import za.co.yakka.model.Rate;
+import za.co.yakka.ejb.QuotePersistenceEJB;
+import za.co.yakka.jpa.Client;
+import za.co.yakka.utilities.ApiUtils;
+import za.co.yakka.utilities.ExchangeRateApi;
+import za.co.yakka.utilities.ExchangeRateUtils;
 
 @Path("/")
 @Stateful
@@ -42,7 +44,7 @@ public class ClientApi {
 	private QuotePersistenceEJB quotePersistence;
 
 	@Inject
-	private exchangeRateUtils exRateUtils;
+	private ExchangeRateUtils exRateUtils;
 
 	@Inject
 	private ExchangeRateManager exchangeRateManager;
@@ -93,14 +95,29 @@ public class ClientApi {
 	@GET
 	@Path("/currencyCodes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getCurrencyCodes() {
+	public Set<String> getCurrencyCodes() {
 
-		String key = "Currency";
-
+		String key = "GBP";
 		return guavaCache.getCurrencyCodes(key);
 
+//		Decoder decoder = new GsonDecoder();
+//		ExchangeRateApi exchangeRateAPI = Feign.builder()
+//														.decoder(new GsonDecoder())
+//														.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io/latest");
+//
+//		Map<String, Object> response  = exchangeRateAPI.currencyCodes("GBP");
+//		Map<String, Double> rates =  (Map<String, Double>) response.get("rates");
+//
+//		if (response != null) {
+//			System.out.println("The results are not null");
+//		}
+//		else{
+//			System.out.println(" B is null");
+//		}
+//
+//		return rates.keySet();
 	}
-	
+
 	@POST
 	@Path("/exchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -109,14 +126,15 @@ public class ClientApi {
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String sourceAmount){
-		
+
 		StringBuffer responseBuffer = ApiUtilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
-															+ sourceCurrency + ","
-															+ targetCurrency);
-		
+				+ sourceCurrency + ","
+				+ targetCurrency);
+
 		return exRateUtils.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
+
 	}
-	
+
 	@POST
 	@Path("/adjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -125,47 +143,49 @@ public class ClientApi {
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String amount){
-	
+
 		StringBuffer responseBuffer = ApiUtilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
 															+ sourceCurrency + ","
 															+ targetCurrency);
-		
+
 		logger.debug(" Received response buffer from utilities ");
-		
-		List<Double> nominalRate = exRateUtils.exchangeRates(responseBuffer, 
-															sourceCurrency, 
-															targetCurrency, 
+
+		List<Double> nominalRate = exRateUtils.exchangeRates(responseBuffer,
+															sourceCurrency,
+															targetCurrency,
 															amount);
-		
+
 		logger.debug("Parsed response buffer and return nominal exchange rates");
-		
+
+
+
 		Map<String, Double> obj = new HashMap<>();
-		
+
 		double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
-	
+
 		logger.debug("Calculated Currrency Adjustment Factor");
-		
+
 		UUID uuid = UUID.randomUUID();
 		String uuidString  = uuid.toString();
 		double sourceAmount = Double.parseDouble(amount);
 		double targetCurrencyRate = nominalRate.get(0);
 		double sourceCurrencyRate = nominalRate.get(2);
 		int idInteger = Integer.parseInt(id);
-		
-		quotePersistence.addQuoteInformation(uuidString, idInteger, sourceCurrency, 
+
+		quotePersistence.addQuoteInformation(uuidString, idInteger, sourceCurrency,
 											targetCurrency,
-											sourceCurrencyRate, 
-											targetCurrencyRate, 
-											CAF, 
+											sourceCurrencyRate,
+											targetCurrencyRate,
+											CAF,
 											sourceAmount);
-		
+
 		logger.debug("Persisted Quote Information");
-		
+
 		obj.put("Exchange Rate", nominalRate.get(0));
 		obj.put("Nominal Exchanged Amount", nominalRate.get(1));
 		obj.put("Adjusted Exchange Amount", nominalRate.get(1) + CAF);
-		
+
 		return obj;
-	
+
 	}
 }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: za.co.yakka.rest2.AppTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s - in za.co.yakka.rest2.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s - in za.co.yakka.rest2.AppTest
