@@ -9,7 +9,7 @@ import javax.ws.rs.core.Application;
 
 import org.apache.log4j.Logger;
 
-@ApplicationPath("/api")
+@ApplicationPath("/clientApi")
 public class MainApplication extends Application {
 	final static Logger logger = Logger.getLogger(MainApplication.class);
 	

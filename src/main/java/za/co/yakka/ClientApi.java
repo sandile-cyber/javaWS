@@ -25,29 +25,37 @@ import jpa.Client;
 import utilities.ApiUtils;
 import utilities.exchangeRateUtils;
 
-@Path("/client")
+@Path("/")
 @Stateful
 public class ClientApi {
 
 	@Inject
 	ClientEJB clientEJB;
 
+	@Inject
 	ApiUtils ApiUtilities;
+
+	@Inject
 	GuavaCache guavaCache;
+
+	@Inject
 	QuotePersistenceEJB quotePersistence;
+
+	@Inject
 	exchangeRateUtils exRateUtils;
-	
+
+	@Inject
 	ExchangeRateManager exchangeRateManager;
 	
 	static Logger logger = Logger.getLogger(ClientApi.class);
 
 	public ClientApi() {
 		super();
-		ApiUtilities = new ApiUtils();
-		guavaCache = new GuavaCache();		
-		exchangeRateManager = new ExchangeRateManager();
-		quotePersistence = new QuotePersistenceEJB();
-		exRateUtils = new exchangeRateUtils();
+//		ApiUtilities = new ApiUtils();
+//		guavaCache = new GuavaCache();
+//		exchangeRateManager = new ExchangeRateManager();
+//		quotePersistence = new QuotePersistenceEJB();
+//		exRateUtils = new exchangeRateUtils();
 	}
 	
 	@GET
@@ -92,7 +100,7 @@ public class ClientApi {
 	public List<String> getCurrencyCodes() {
 
 		String key = "Currency";
-	
+
 		return guavaCache.getCurrencyCodes(key);
 
 	}

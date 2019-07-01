@@ -81,7 +81,7 @@ public class ClientEJB {
     	
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = dbManager.getEntityManager().find(Client.class, id);
-    	
+
     	if (client == null) {
     		return null;
     	}
