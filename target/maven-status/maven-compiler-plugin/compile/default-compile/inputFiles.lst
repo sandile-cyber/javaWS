@@ -1,8 +1,7 @@
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/ExchangeRateUtils.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ExchangeRateManager.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ClientApi.java
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/Rate.java
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/ExchangeRateAdjustmentBean.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/ResponseModel.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/ExchangeRateAdjustmentEJB.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/Client.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/DbManager.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/Quote.java
@@ -12,5 +11,3 @@
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/QuotePersistenceEJB.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/ClientEJB.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/ExchangeRateApi.java
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/ApiUtils.java
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/Quote.java

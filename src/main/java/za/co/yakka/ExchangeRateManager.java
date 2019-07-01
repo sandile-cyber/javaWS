@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import za.co.yakka.ejb.ExchangeRateAdjustmentEJB;
+import za.co.yakka.model.ResponseModel;
 import za.co.yakka.utilities.ExchangeRateApi;
 
 import java.util.ArrayList;
@@ -15,13 +16,15 @@ import java.util.Map;
 @Stateless
 public class ExchangeRateManager {
 
-	@Inject
 	ExchangeRateAdjustmentEJB exRateAdj;
+
+	ResponseModel response;
 
 	ExchangeRateApi exchangeRateService;
 	
 	public ExchangeRateManager() {
 		exRateAdj = new ExchangeRateAdjustmentEJB();
+		response = new ResponseModel();
 
 		exchangeRateService = Feign.builder()
 				.decoder(new GsonDecoder())
@@ -29,42 +32,39 @@ public class ExchangeRateManager {
 
 	}
 
-	public List<Double> exchangeRateQuote(
+	public ResponseModel exchangeRateQuote(
 										  String sourceCurrency,
 										  String targetCurrency,
 										  String sourceAmount){
 
-		Map<String, Double> response = (Map<String, Double>) exchangeRateService.
+		Map<String, Double> responseMap = (Map<String, Double>) exchangeRateService.
 															 exchangeRate(sourceCurrency, targetCurrency).get("rates");
 
-		double sourceCurrencyValue = response.get(sourceCurrency);
-		double targetCurrencyValue = response.get(targetCurrency);
+		double sourceCurrencyValue = responseMap.get(sourceCurrency);
+		double targetCurrencyValue = responseMap.get(targetCurrency);
 		double sourceAmountD = Double.parseDouble(sourceAmount);
 
-		List<Double> output = new ArrayList<>();
-
 		if(sourceCurrencyValue < targetCurrencyValue ) {
-
-			output.add(targetCurrencyValue);
-			output.add(sourceAmountD * targetCurrencyValue);
-			output.add(sourceCurrencyValue);
+			response.setExchangeRate(targetCurrencyValue);
+			response.setTargetAmount(sourceAmountD * targetCurrencyValue);
+			response.setSourceCurrency(sourceCurrencyValue);
 
 		}
 		else if(sourceCurrencyValue > targetCurrencyValue) {
 
-			output.add(targetCurrencyValue);
-			output.add(sourceAmountD / sourceCurrencyValue);
-			output.add(sourceCurrencyValue);
+			response.setExchangeRate(targetCurrencyValue);
+			response.setTargetAmount(sourceAmountD / sourceCurrencyValue);
+			response.setSourceCurrency(sourceCurrencyValue);
 
 		}else {
 
-			output.add(1.);
-			output.add(1.);
-			output.add(1.);
+			response.setExchangeRate(1.);
+			response.setTargetAmount(1.);
+			response.setSourceCurrency(1.);
 
 		}
 
-		return output;
+		return response;
 	}
 	
 	public double adjustmentRate(String ClientId,

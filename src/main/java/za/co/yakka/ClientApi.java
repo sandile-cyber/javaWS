@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import za.co.yakka.cache.GuavaCache;
 import za.co.yakka.ejb.ClientEJB;
 import za.co.yakka.jpa.Client;
+import za.co.yakka.model.ResponseModel;
 
 
 @Path("/")
@@ -88,7 +89,7 @@ public class ClientApi {
 	@POST
 	@Path("/exchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Double> getExchangeRateQuote(
+	public ResponseModel getExchangeRateQuote(
 			@QueryParam("id") String id,
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,
@@ -101,7 +102,7 @@ public class ClientApi {
 	@POST
 	@Path("/adjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Double> getAdjustedExchangeRate(
+	public ResponseModel getAdjustedExchangeRate(
 			@QueryParam("id") String id,
 			@QueryParam("sourceCurrency") String sourceCurrency,
 			@QueryParam("targetCurrency") String targetCurrency,

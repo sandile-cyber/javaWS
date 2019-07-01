@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import za.co.yakka.ExchangeRateManager;
 import za.co.yakka.jpa.Client;
+import za.co.yakka.model.ResponseModel;
 import za.co.yakka.utilities.DbManager;
 
 /**
@@ -19,10 +20,6 @@ import za.co.yakka.utilities.DbManager;
 
 @Stateless
 public class ClientEJB {
-
-    /**
-     * Default constructor. 
-     */
 
 	DbManager dbManager;
 	String persistenceUnit;
@@ -39,7 +36,6 @@ public class ClientEJB {
 	public ClientEJB() {
 
     	dbManager = DbManager.getInstance();
-
     	persistenceUnit = "client";
 
     }
@@ -78,7 +74,8 @@ public class ClientEJB {
     	Query q = dbManager.getEntityManager().createQuery("select c from Client c");
     	
     	List<Client> resultList = (List<Client>) q.getResultList();
-		return resultList;
+
+    	return resultList;
     
     }
     
@@ -120,27 +117,29 @@ public class ClientEJB {
 
     }
 
-    public List<Double> getAdjustedExchangeRate(String id,
+    public ResponseModel getAdjustedExchangeRate(String id,
 												String sourceCurrency,
 												String targetCurrency,
 												String amount){
 
-    	List<Double> response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, amount);
+    	ResponseModel response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, amount);
     	double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 
-    	response.set(1, response.get(1) + CAF );
+    	response.setTargetAmount( response.getTargetAmount() + CAF );
 
 
-		logger.debug("Calculated Currrency Adjustment Factor");
+		logger.debug("Calculated Currency Adjustment Factor");
 
 		UUID uuid = UUID.randomUUID();
 		String uuidString  = uuid.toString();
 		double sourceAmount = Double.parseDouble(amount);
-		double targetCurrencyRate = response.get(0);
-		double sourceCurrencyRate = response.get(2);
+		double targetCurrencyRate = response.getExchangeRate();
+		double sourceCurrencyRate = response.getSourceCurrency();
 		int idInteger = Integer.parseInt(id);
 
-		quotePersistence.addQuoteInformation(uuidString, idInteger, sourceCurrency,
+		quotePersistence.addQuoteInformation(uuidString,
+											idInteger,
+											sourceCurrency,
 											targetCurrency,
 											sourceCurrencyRate,
 											targetCurrencyRate,
@@ -152,5 +151,4 @@ public class ClientEJB {
     	return response;
 
     }
-   
 }

@@ -16,7 +16,6 @@ import za.co.yakka.utilities.ExchangeRateApi;
 public class GuavaCache {
 
 	LoadingCache<String, Set<String>> currencyCodes;
-	ApiUtils utilities;
 	static Logger logger;
 	
 	
@@ -24,8 +23,7 @@ public class GuavaCache {
 		super();
 
 		logger = Logger.getLogger(GuavaCache.class);
-		utilities = new ApiUtils();
-		
+
 		currencyCodes = CacheBuilder.newBuilder()
 				.build(new CacheLoader<String, Set<String>>(){
 			
