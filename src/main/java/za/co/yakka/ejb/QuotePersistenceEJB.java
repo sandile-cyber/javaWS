@@ -16,10 +16,12 @@ public class QuotePersistenceEJB {
 	static Logger logger4j;
 
 	public QuotePersistenceEJB() {
+
 		super();
 		persistenceUnit = "client";
 		dbManager = DbManager.getInstance();
-		 logger4j = Logger.getLogger(QuotePersistenceEJB.class);
+		logger4j = Logger.getLogger(QuotePersistenceEJB.class);
+
 	}
 	
 	public void addQuoteInformation(	

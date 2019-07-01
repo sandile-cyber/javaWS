@@ -57,15 +57,6 @@ public class ClientEJB {
     	}
 				
 	}
-	
-    public void removeClient(int id) {
-    
-    	dbManager.openEntityManagerConnection(persistenceUnit);
-    	Client client  = dbManager.getEntityManager().find(Client.class, id);
-    	dbManager.getEntityManager().remove(client);
-    	dbManager.closeEntityManagerConnection();
-    
-    }
     
     public List<Client> getAll(){
     	

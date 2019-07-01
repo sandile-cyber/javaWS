@@ -35,7 +35,6 @@ public class GuavaCache {
 					@Override
 					public Set<String> load(String key) throws Exception {
 
-						Decoder decoder = new GsonDecoder();
 						ExchangeRateApi exchangeRateAPI = Feign.builder()
 								.decoder(new GsonDecoder())
 								.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io/latest");

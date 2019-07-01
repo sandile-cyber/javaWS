@@ -7,6 +7,7 @@ za/co/yakka/utilities/DbManager.class
 za/co/yakka/ejb/QuotePersistenceEJB.class
 za/co/yakka/cache/GuavaCache$1.class
 za/co/yakka/ejb/ClientEJB.class
+za/co/yakka/model/Quote.class
 za/co/yakka/ExchangeRateManager.class
 za/co/yakka/jpa/Quote.class
 za/co/yakka/MainApplication.class

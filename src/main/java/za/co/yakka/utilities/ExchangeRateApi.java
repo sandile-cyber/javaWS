@@ -4,6 +4,7 @@ import feign.Param;
 import feign.RequestLine;
 import za.co.yakka.model.Rate;
 
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.Map;
 
 public interface ExchangeRateApi {
@@ -12,10 +13,8 @@ public interface ExchangeRateApi {
     Map<String, Object> currencyCodes(@Param("BASE") String base);
 
 
-    //    @RequestLine("GET /latest?symbols={sourceCurrency},{targetCurrency}")
-//    void exchangeRate(@Param("sourceCurrency") String sourceCurrency, @Param("targetCurrency") String targetCurrency);
-
-
+    @RequestLine("GET /latest?symbols={sourceCurrency},{targetCurrency}")
+    Map<String, Object> exchangeRate(@Param("sourceCurrency") String sourceCurrency, @Param("targetCurrency") String targetCurrency);
 
 }
 

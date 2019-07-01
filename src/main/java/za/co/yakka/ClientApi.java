@@ -20,11 +20,9 @@ import org.apache.log4j.Logger;
 
 import za.co.yakka.cache.GuavaCache;
 import za.co.yakka.ejb.ClientEJB;
-import za.co.yakka.model.Rate;
 import za.co.yakka.ejb.QuotePersistenceEJB;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.utilities.ApiUtils;
-import za.co.yakka.utilities.ExchangeRateApi;
 import za.co.yakka.utilities.ExchangeRateUtils;
 
 @Path("/")
@@ -98,24 +96,9 @@ public class ClientApi {
 	public Set<String> getCurrencyCodes() {
 
 		String key = "GBP";
+
 		return guavaCache.getCurrencyCodes(key);
 
-//		Decoder decoder = new GsonDecoder();
-//		ExchangeRateApi exchangeRateAPI = Feign.builder()
-//														.decoder(new GsonDecoder())
-//														.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io/latest");
-//
-//		Map<String, Object> response  = exchangeRateAPI.currencyCodes("GBP");
-//		Map<String, Double> rates =  (Map<String, Double>) response.get("rates");
-//
-//		if (response != null) {
-//			System.out.println("The results are not null");
-//		}
-//		else{
-//			System.out.println(" B is null");
-//		}
-//
-//		return rates.keySet();
 	}
 
 	@POST
@@ -127,11 +110,8 @@ public class ClientApi {
 			@QueryParam("targetCurrency") String targetCurrency,
 			@QueryParam("sourceAmount") String sourceAmount){
 
-		StringBuffer responseBuffer = ApiUtilities.invokeAPI("https://api.exchangeratesapi.io/latest?symbols="
-				+ sourceCurrency + ","
-				+ targetCurrency);
 
-		return exRateUtils.exchangeRates(responseBuffer, sourceCurrency, targetCurrency, sourceAmount );
+		return exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, sourceAmount );
 
 	}
 
@@ -156,8 +136,6 @@ public class ClientApi {
 															amount);
 
 		logger.debug("Parsed response buffer and return nominal exchange rates");
-
-
 
 		Map<String, Double> obj = new HashMap<>();
 
