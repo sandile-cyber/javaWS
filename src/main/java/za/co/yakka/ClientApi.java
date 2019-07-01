@@ -30,32 +30,28 @@ import utilities.exchangeRateUtils;
 public class ClientApi {
 
 	@Inject
-	ClientEJB clientEJB;
+	private ClientEJB clientEJB;
 
 	@Inject
-	ApiUtils ApiUtilities;
+	private ApiUtils ApiUtilities;
 
 	@Inject
-	GuavaCache guavaCache;
+	private GuavaCache guavaCache;
 
 	@Inject
-	QuotePersistenceEJB quotePersistence;
+	private QuotePersistenceEJB quotePersistence;
 
 	@Inject
-	exchangeRateUtils exRateUtils;
+	private exchangeRateUtils exRateUtils;
 
 	@Inject
-	ExchangeRateManager exchangeRateManager;
+	private ExchangeRateManager exchangeRateManager;
 	
 	static Logger logger = Logger.getLogger(ClientApi.class);
 
 	public ClientApi() {
 		super();
-//		ApiUtilities = new ApiUtils();
-//		guavaCache = new GuavaCache();
-//		exchangeRateManager = new ExchangeRateManager();
-//		quotePersistence = new QuotePersistenceEJB();
-//		exRateUtils = new exchangeRateUtils();
+
 	}
 	
 	@GET
@@ -143,7 +139,7 @@ public class ClientApi {
 		
 		logger.debug("Parsed response buffer and return nominal exchange rates");
 		
-		Map<String, Double> obj = new HashMap<String, Double>();
+		Map<String, Double> obj = new HashMap<>();
 		
 		double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 	
