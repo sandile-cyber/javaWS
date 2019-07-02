@@ -31,26 +31,25 @@ public class ExchangeRateManager {
 	public ResponseModel exchangeRateQuote(
 										  String sourceCurrency,
 										  String targetCurrency,
-										  String sourceAmount){
+										  double sourceAmount){
 
 		Map<String, Double> responseMap = (Map<String, Double>) exchangeRateService.
 															 exchangeRate(sourceCurrency, targetCurrency).get("rates");
 
 		double sourceCurrencyValue = responseMap.get(sourceCurrency);
 		double targetCurrencyValue = responseMap.get(targetCurrency);
-		double sourceAmountD = Double.parseDouble(sourceAmount);
 
 		if(sourceCurrencyValue < targetCurrencyValue ) {
 
 			response.setExchangeRate(targetCurrencyValue);
-			response.setTargetAmount(sourceAmountD * targetCurrencyValue);
+			response.setTargetAmount(sourceAmount * targetCurrencyValue);
 			response.setSourceCurrency(sourceCurrencyValue);
 
 		}
 		else if(sourceCurrencyValue > targetCurrencyValue) {
 
 			response.setExchangeRate(targetCurrencyValue);
-			response.setTargetAmount(sourceAmountD / sourceCurrencyValue);
+			response.setTargetAmount(sourceAmount / sourceCurrencyValue);
 			response.setSourceCurrency(sourceCurrencyValue);
 
 		}else {
@@ -64,22 +63,20 @@ public class ExchangeRateManager {
 		return response;
 	}
 	
-	public double adjustmentRate(String ClientId,
+	public double adjustmentRate(int ClientId,
 							 	String sourceCurrency,
 							 	String targetCurrency){
 		
 		double sourceCurrencyAdjustment = exRateAdj.getAdjustmentRate(sourceCurrency);
 		double targetCurrencyAdjustment = exRateAdj.getAdjustmentRate(targetCurrency);
-		
-		int ClientIdInt = Integer.parseInt(ClientId);
-		
+
 		if (sourceCurrencyAdjustment > targetCurrencyAdjustment) {
-					
-			return + (sourceCurrencyAdjustment * ClientIdInt);
-	
+
+			return + (sourceCurrencyAdjustment * ClientId);
+
 		}
-		
-		return  - (targetCurrencyAdjustment * ClientIdInt);
+
+		return  - (targetCurrencyAdjustment * ClientId);
 		
 	}
 	

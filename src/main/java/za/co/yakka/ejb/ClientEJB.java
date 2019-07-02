@@ -32,7 +32,6 @@ public class ClientEJB {
 
 	static Logger logger = Logger.getLogger(ClientEJB.class);
 
-
 	public ClientEJB() {
 
     	dbManager = DbManager.getInstance();
@@ -117,12 +116,12 @@ public class ClientEJB {
 
     }
 
-    public ResponseModel getAdjustedExchangeRate(String id,
+    public ResponseModel getAdjustedExchangeRate(int id,
 												String sourceCurrency,
 												String targetCurrency,
-												String amount){
+												double sourceAmount){
 
-    	ResponseModel response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, amount);
+    	ResponseModel response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, sourceAmount);
     	double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 
     	response.setTargetAmount( response.getTargetAmount() + CAF );
@@ -132,13 +131,11 @@ public class ClientEJB {
 
 		UUID uuid = UUID.randomUUID();
 		String uuidString  = uuid.toString();
-		double sourceAmount = Double.parseDouble(amount);
 		double targetCurrencyRate = response.getExchangeRate();
 		double sourceCurrencyRate = response.getSourceCurrency();
-		int idInteger = Integer.parseInt(id);
 
 		quotePersistence.addQuoteInformation(uuidString,
-											idInteger,
+											id,
 											sourceCurrency,
 											targetCurrency,
 											sourceCurrencyRate,

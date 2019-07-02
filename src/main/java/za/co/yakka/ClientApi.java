@@ -4,24 +4,21 @@ import java.util.*;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import za.co.yakka.cache.GuavaCache;
 import za.co.yakka.ejb.ClientEJB;
 import za.co.yakka.jpa.Client;
+import za.co.yakka.jpa.Quote;
 import za.co.yakka.model.ResponseModel;
 
 
 @Path("/")
 @Stateful
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ClientApi {
 
 	@Inject
@@ -89,26 +86,25 @@ public class ClientApi {
 	@POST
 	@Path("/exchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseModel getExchangeRateQuote(
-			@QueryParam("id") String id,
-			@QueryParam("sourceCurrency") String sourceCurrency,
-			@QueryParam("targetCurrency") String targetCurrency,
-			@QueryParam("sourceAmount") String sourceAmount){
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ResponseModel getExchangeRateQuote(Quote quote){
 
-		return exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, sourceAmount );
+		return exchangeRateManager.exchangeRateQuote(quote.getSourceCurrency(),
+													 quote.getTargetCurrency(),
+													 quote.getSourceAmount() );
 
 	}
 
 	@POST
 	@Path("/adjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseModel getAdjustedExchangeRate(
-			@QueryParam("id") String id,
-			@QueryParam("sourceCurrency") String sourceCurrency,
-			@QueryParam("targetCurrency") String targetCurrency,
-			@QueryParam("sourceAmount") String amount){
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ResponseModel getAdjustedExchangeRate(Quote quote){
 
-		return clientEJB.getAdjustedExchangeRate(id,sourceCurrency,targetCurrency,amount);
+		return clientEJB.getAdjustedExchangeRate(quote.getClientId(),
+												 quote.getSourceCurrency(),
+												 quote.getTargetCurrency(),
+												 quote.getSourceAmount());
 
 	}
 }

@@ -2,6 +2,9 @@ package za.co.yakka.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * The persistent class for the Quotes database table.
