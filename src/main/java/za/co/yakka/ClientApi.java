@@ -58,7 +58,7 @@ public class ClientApi {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/clientList")
 	public List<Client> getClientList() {
-
+		logger.debug("fetching clients");
 		return clientEJB.getAll();
 
 	}
@@ -72,6 +72,7 @@ public class ClientApi {
 	@PUT
 	@Path("/client")
 	public void updateClient(@QueryParam("id") String id, @QueryParam("name") String name) {
+
 		clientEJB.updateClient(Integer.parseInt(id), name);
 	}
 
@@ -81,6 +82,8 @@ public class ClientApi {
 	public Set<String> getCurrencyCodes() {
 
 		String key = "GBP";
+
+		logger.debug("here we are");
 
 		return guavaCache.getCurrencyCodes(key);
 
