@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import za.co.yakka.cache.GuavaCache;
+import za.co.yakka.customException.UserNotFoundException;
 import za.co.yakka.ejb.ClientEJB;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.jpa.Quote;
@@ -41,7 +42,8 @@ public class ClientApi {
 	@Path("client/{id}")
 	public Client getClient(@PathParam("id") int id) {
 
-		return clientEJB.getClient(id);
+			return clientEJB.getClient(id);
+
 	}
 
 	@GET

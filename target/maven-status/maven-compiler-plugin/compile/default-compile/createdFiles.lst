@@ -12,5 +12,6 @@ za/co/yakka/ExchangeRateManager.class
 za/co/yakka/jpa/Quote.class
 za/co/yakka/MainApplication.class
 za/co/yakka/jpa/CurrencyAdjustment.class
+za/co/yakka/customException/UserNotFoundException.class
 za/co/yakka/model/FeignResponse.class
 za/co/yakka/cache/GuavaCache.class

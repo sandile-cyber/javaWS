@@ -46,6 +46,7 @@ public class GuavaCache {
 	}
 	
 	public Set<String> getCurrencyCodes(String key) {
+
 		logger.debug("Fetching from Guava cache");
 
 		Map<String, Double> rates = null;

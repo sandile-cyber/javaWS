@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import za.co.yakka.ExchangeRateManager;
+import za.co.yakka.customException.UserNotFoundException;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.model.ResponseModel;
 import za.co.yakka.utilities.DbManager;
@@ -38,34 +39,6 @@ public class ClientEJB {
     	persistenceUnit = "client";
 
     }
-     
-    public void updateClient(int id, String name) {
-
-    	Client client = getClient(id);
-    	dbManager.openEntityManagerConnection(persistenceUnit);
-    	client.setId(id);
-    	client.setName(name);
-    	
-    	try {
-    		
-    		EntityTransaction entityTransaction = dbManager.getEntityManager().getTransaction();
-    		entityTransaction.begin();
-    		
-    		dbManager.getEntityManager().merge(client);
-    		
-    		entityTransaction.commit();
-    		
-    	}
-    	
-    	catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	
-    	finally {
-    		dbManager.closeEntityManagerConnection();
-    	}
-				
-	}
     
     public List<Client> getAll(){
     	
@@ -77,14 +50,15 @@ public class ClientEJB {
     	return resultList;
     
     }
-    
-    public Client getClient(int id) {
+
+    public Client getClient(int id) throws UserNotFoundException
+    {
     	
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = dbManager.getEntityManager().find(Client.class, id);
 
     	if (client == null) {
-    		return null;
+    		throw new UserNotFoundException("Client not found");
     	}
     	
     	dbManager.closeEntityManagerConnection();
@@ -92,7 +66,45 @@ public class ClientEJB {
     	return client;
     	
     }
-    
+
+    public void updateClient(int id, String name) {
+
+		Client client = null;
+
+		try{
+			client = getClient(id);
+		}
+		catch (UserNotFoundException e){
+			e.getMessage();
+		}
+
+		dbManager.openEntityManagerConnection(persistenceUnit);
+		client.setId(id);
+		client.setName(name);
+
+		try {
+
+			EntityTransaction entityTransaction = dbManager.getEntityManager().getTransaction();
+			entityTransaction.begin();
+
+			dbManager.getEntityManager().merge(client);
+
+			entityTransaction.commit();
+
+		}
+
+		catch(Exception e){
+
+			e.printStackTrace();
+
+		}
+
+		finally {
+			dbManager.closeEntityManagerConnection();
+		}
+
+	}
+
     public void addClient(int id, String name) {
 
     	dbManager.openEntityManagerConnection(persistenceUnit);
@@ -127,7 +139,6 @@ public class ClientEJB {
     	double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 
     	response.setTargetAmount( response.getTargetAmount() + CAF );
-
 
 		logger.debug("Calculated Currency Adjustment Factor");
 

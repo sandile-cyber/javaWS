@@ -6,6 +6,7 @@
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/Rate.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/Client.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/DbManager.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/customException/UserNotFoundException.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/Quote.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/cache/GuavaCache.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/CurrencyAdjustment.java

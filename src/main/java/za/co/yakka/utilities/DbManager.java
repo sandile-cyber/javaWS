@@ -22,7 +22,7 @@ public class DbManager {
     public void openEntityManagerConnection(String persistenceUnit) {
     	
     	try {
-    		
+
     	  this.entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
           this.entityManager = entityManagerFactory.createEntityManager();
           
@@ -33,6 +33,7 @@ public class DbManager {
     }
     
     public void closeEntityManagerConnection() {
+
     	try {
 	    	this.entityManager.close();
 	    	this.entityManagerFactory.close();
