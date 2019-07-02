@@ -9,7 +9,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import za.co.yakka.ExchangeRateManager;
 import za.co.yakka.customException.UserNotFoundException;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.model.ResponseModel;

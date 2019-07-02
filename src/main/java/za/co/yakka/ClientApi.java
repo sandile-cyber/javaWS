@@ -9,8 +9,8 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import za.co.yakka.cache.GuavaCache;
-import za.co.yakka.customException.UserNotFoundException;
 import za.co.yakka.ejb.ClientEJB;
+import za.co.yakka.ejb.ExchangeRateManager;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.jpa.Quote;
 import za.co.yakka.model.ResponseModel;
