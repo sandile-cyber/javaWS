@@ -62,14 +62,15 @@ public class ClientApi {
 
 	@POST
 	@Path("/client")
-	public void addClient(@QueryParam("id") String id, @QueryParam("name") String name) {
-		clientEJB.addClient(Integer.parseInt(id), name);
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addClient(Client client) {
+		clientEJB.addClient(client.getId(), client.getName());
 	}
 
 	@PUT
 	@Path("/client")
-	public void updateClient(@QueryParam("id") String id, @QueryParam("name") String name) {
-		clientEJB.updateClient(Integer.parseInt(id), name);
+	public void updateClient(Client client) {
+		clientEJB.updateClient(client.getId(), client.getName());
 	}
 
 	@GET
@@ -91,8 +92,7 @@ public class ClientApi {
 
 		return exchangeRateManager.exchangeRateQuote(quote.getSourceCurrency(),
 													 quote.getTargetCurrency(),
-													 quote.getSourceAmount() );
-
+													 quote.getSourceAmount());
 	}
 
 	@POST

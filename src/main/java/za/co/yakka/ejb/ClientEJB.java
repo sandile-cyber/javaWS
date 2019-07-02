@@ -94,7 +94,7 @@ public class ClientEJB {
     }
     
     public void addClient(int id, String name) {
-    	
+
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = new Client();
     	client.setId(id);
@@ -105,10 +105,12 @@ public class ClientEJB {
 	    	dbManager.getEntityManager().getTransaction().begin();
 	    	dbManager.getEntityManager().persist(client);
 	    	dbManager.getEntityManager().getTransaction().commit();
-    	
+
+	    	logger.debug("client added");
     	}
 
     	catch(Exception e) {
+
     		e.printStackTrace();
     	}finally {
     		dbManager.closeEntityManagerConnection();
