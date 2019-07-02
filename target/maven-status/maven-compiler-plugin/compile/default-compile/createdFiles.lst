@@ -1,6 +1,7 @@
 za/co/yakka/jpa/Client.class
 za/co/yakka/ClientApi.class
 za/co/yakka/model/ResponseModel.class
+za/co/yakka/model/Rate.class
 za/co/yakka/ejb/ExchangeRateAdjustmentEJB.class
 za/co/yakka/utilities/DbManager.class
 za/co/yakka/ejb/QuotePersistenceEJB.class
@@ -11,4 +12,5 @@ za/co/yakka/ExchangeRateManager.class
 za/co/yakka/jpa/Quote.class
 za/co/yakka/MainApplication.class
 za/co/yakka/jpa/CurrencyAdjustment.class
+za/co/yakka/model/FeignResponse.class
 za/co/yakka/cache/GuavaCache.class

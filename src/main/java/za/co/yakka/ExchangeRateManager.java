@@ -33,8 +33,8 @@ public class ExchangeRateManager {
 										  String targetCurrency,
 										  double sourceAmount){
 
-		Map<String, Double> responseMap = (Map<String, Double>) exchangeRateService.
-															 exchangeRate(sourceCurrency, targetCurrency).get("rates");
+		Map<String, Double> responseMap = exchangeRateService.
+															 exchangeRate(sourceCurrency, targetCurrency).getRates();
 
 		double sourceCurrencyValue = responseMap.get(sourceCurrency);
 		double targetCurrencyValue = responseMap.get(targetCurrency);

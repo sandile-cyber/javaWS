@@ -1,6 +1,5 @@
 package za.co.yakka.cache;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import feign.Feign;
@@ -11,11 +10,13 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
+import za.co.yakka.model.FeignResponse;
+import za.co.yakka.model.Rate;
 import za.co.yakka.utilities.ExchangeRateInterface;
 
 public class GuavaCache {
 
-	LoadingCache<String, Set<String>> currencyCodes;
+	LoadingCache<String, Map<String, Double>> currencyCodes;
 	static Logger logger;
 	
 	
@@ -25,38 +26,37 @@ public class GuavaCache {
 		logger = Logger.getLogger(GuavaCache.class);
 
 		currencyCodes = CacheBuilder.newBuilder()
-				.build(new CacheLoader<String, Set<String>>(){
+				.build(new CacheLoader<String, Map<String, Double>>(){
 			
 					@Override
-					public Set<String> load(String key) throws Exception {
+					public Map<String, Double> load(String key) throws Exception {
 
 						ExchangeRateInterface exchangeRateAPI = Feign.builder()
 								.decoder(new GsonDecoder())
 								.target(ExchangeRateInterface.class,"https://api.exchangeratesapi.io/latest");
 
-						Map<String, Object> response  = exchangeRateAPI.currencyCodes(key);
-						Map<String, Double> rates =  (Map<String, Double>) response.get("rates");
+						FeignResponse map = exchangeRateAPI.currencyCodes(key);
+						logger.debug("Got the require output for from the API");
+						Map<String, Double> rates = map.getRates();
 
-						return rates.keySet();
+						return rates;
 
 					}
 				});
 	}
 	
-	public Set<String> getCurrencyCodes(String key){
+	public Set<String> getCurrencyCodes(String key) {
 		logger.debug("Fetching from Guava cache");
+
+		Map<String, Double> rates = null;
+
 		try {
-		
-			return currencyCodes.get(key);
-		
-		}
-		catch( ExecutionException e) {
-		
+			rates = currencyCodes.get("");
+		} catch (ExecutionException e) {
 			e.printStackTrace();
-		
-		}	
-		
-		return null;
+		}
+
+		return rates.keySet();
 	}
 
 

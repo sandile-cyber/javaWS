@@ -45,7 +45,5 @@ public class DbManager {
     public EntityManager getEntityManager() {
     	return this.entityManager;
     }
-    
-    
-    
+
 }
