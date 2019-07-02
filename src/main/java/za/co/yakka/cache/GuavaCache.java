@@ -11,7 +11,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import za.co.yakka.utilities.ExchangeRateApi;
+import za.co.yakka.utilities.ExchangeRateInterface;
 
 public class GuavaCache {
 
@@ -30,9 +30,9 @@ public class GuavaCache {
 					@Override
 					public Set<String> load(String key) throws Exception {
 
-						ExchangeRateApi exchangeRateAPI = Feign.builder()
+						ExchangeRateInterface exchangeRateAPI = Feign.builder()
 								.decoder(new GsonDecoder())
-								.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io/latest");
+								.target(ExchangeRateInterface.class,"https://api.exchangeratesapi.io/latest");
 
 						Map<String, Object> response  = exchangeRateAPI.currencyCodes(key);
 						Map<String, Double> rates =  (Map<String, Double>) response.get("rates");

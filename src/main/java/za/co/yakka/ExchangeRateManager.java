@@ -5,7 +5,7 @@ import feign.Feign;
 import feign.gson.GsonDecoder;
 import za.co.yakka.ejb.ExchangeRateAdjustmentEJB;
 import za.co.yakka.model.ResponseModel;
-import za.co.yakka.utilities.ExchangeRateApi;
+import za.co.yakka.utilities.ExchangeRateInterface;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class ExchangeRateManager {
 
 	ResponseModel response;
 
-	ExchangeRateApi exchangeRateService;
+	ExchangeRateInterface exchangeRateService;
 	
 	public ExchangeRateManager() {
 		exRateAdj = new ExchangeRateAdjustmentEJB();
@@ -24,7 +24,7 @@ public class ExchangeRateManager {
 
 		exchangeRateService = Feign.builder()
 				.decoder(new GsonDecoder())
-				.target(ExchangeRateApi.class,"https://api.exchangeratesapi.io");
+				.target(ExchangeRateInterface.class,"https://api.exchangeratesapi.io");
 
 	}
 
