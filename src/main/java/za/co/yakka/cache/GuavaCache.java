@@ -32,8 +32,8 @@ public class GuavaCache {
 					public Map<String, Double> load(String key) throws Exception {
 
 						ExchangeRateInterface exchangeRateAPI = Feign.builder()
-								.decoder(new GsonDecoder())
-								.target(ExchangeRateInterface.class,"https://api.exchangeratesapi.io/latest");
+																.decoder(new GsonDecoder())
+																.target(ExchangeRateInterface.class,"https://api.exchangeratesapi.io/latest");
 
 						FeignResponse map = exchangeRateAPI.currencyCodes(key);
 						logger.debug("Got the require output for from the API");
@@ -58,10 +58,7 @@ public class GuavaCache {
 		}
 
 		return rates.keySet();
+
 	}
-
-
-
-
 
 }

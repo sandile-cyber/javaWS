@@ -17,6 +17,7 @@
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/TestDB" />
 			<property name="javax.persistence.jdbc.user" value="sandile" />
 			<property name="javax.persistence.jdbc.password" value="sandile11" />
+
 		</properties>
 		
 	</persistence-unit>

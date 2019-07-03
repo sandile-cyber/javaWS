@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="za.co.yakka.rest2.AppTest" time="0.014" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="za.co.yakka.rest2.AppTest" time="0.016" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -17,7 +17,7 @@
     <property name="user.country" value="ZA"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_211/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter8206195132861763338.jar /home/sandile/eclipse-workspace/rest2/target/surefire 2019-07-02T21-06-22_549-jvmRun1 surefire4674123681801726532tmp surefire_0993106369787388947tmp"/>
+    <property name="sun.java.command" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter316626596194754106.jar /home/sandile/eclipse-workspace/rest2/target/surefire 2019-07-03T15-03-25_927-jvmRun1 surefire2084407020671912219tmp surefire_02539609814915045573tmp"/>
     <property name="surefire.test.class.path" value="/home/sandile/eclipse-workspace/rest2/target/test-classes:/home/sandile/eclipse-workspace/rest2/target/classes:/home/sandile/.m2/repository/io/github/openfeign/feign-okhttp/9.3.1/feign-okhttp-9.3.1.jar:/home/sandile/.m2/repository/com/squareup/okhttp3/okhttp/3.2.0/okhttp-3.2.0.jar:/home/sandile/.m2/repository/com/squareup/okio/okio/1.6.0/okio-1.6.0.jar:/home/sandile/.m2/repository/io/github/openfeign/feign-gson/9.3.1/feign-gson-9.3.1.jar:/home/sandile/.m2/repository/io/github/openfeign/feign-slf4j/9.3.1/feign-slf4j-9.3.1.jar:/home/sandile/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/home/sandile/.m2/repository/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar:/home/sandile/.m2/repository/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar:/home/sandile/.m2/repository/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar:/home/sandile/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/sandile/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/sandile/.m2/repository/io/github/openfeign/feign-core/10.2.3/feign-core-10.2.3.jar:/home/sandile/.m2/repository/javax/javaee-api/8.0/javaee-api-8.0.jar:/home/sandile/.m2/repository/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar:/home/sandile/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/home/sandile/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/home/sandile/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar:/home/sandile/.m2/repository/org/json/json/20180813/json-20180813.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/sandile"/>
@@ -30,13 +30,13 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter8206195132861763338.jar"/>
+    <property name="surefire.real.class.path" value="/home/sandile/eclipse-workspace/rest2/target/surefire/surefirebooter316626596194754106.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/jdk1.8.0_211/jre/lib/resources.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/rt.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/sunrsasign.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jsse.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jce.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/charsets.jar:/usr/lib/jvm/jdk1.8.0_211/jre/lib/jfr.jar:/usr/lib/jvm/jdk1.8.0_211/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_211-b12"/>
     <property name="user.name" value="sandile"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="4.15.0-52-generic"/>
+    <property name="os.version" value="4.15.0-54-generic"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/jdk1.8.0_211/jre/lib/endorsed"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>

@@ -2,6 +2,7 @@ package za.co.yakka.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -24,9 +25,11 @@ public class Quote implements Serializable {
 	private int clientId;
 
 	@Column(name="source_amount")
+	@NotNull
 	private double sourceAmount;
 
 	@Column(name="source_currency")
+	@NotNull
 	private String sourceCurrency;
 
 	@Column(name="source_currency_rate")
@@ -36,6 +39,7 @@ public class Quote implements Serializable {
 	private String targetCurrency;
 
 	@Column(name="target_currency_rate")
+	@NotNull
 	private double targetCurrencyRate;
 	
 	@Id

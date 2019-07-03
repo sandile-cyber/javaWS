@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
@@ -71,7 +72,9 @@ public class ClientApi {
 
 	@PUT
 	@Path("/client")
-	public void updateClient(Client client) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateClient(@Valid  Client client) {
+		logger.debug("Trying to update client");
 		clientEJB.updateClient(client.getId(), client.getName());
 	}
 
@@ -90,7 +93,7 @@ public class ClientApi {
 	@Path("/exchangeRateQuote")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseModel getExchangeRateQuote(Quote quote){
+	public ResponseModel getExchangeRateQuote(@Valid Quote quote){
 
 		return exchangeRateManager.exchangeRateQuote(quote.getSourceCurrency(),
 													 quote.getTargetCurrency(),
@@ -101,7 +104,7 @@ public class ClientApi {
 	@Path("/adjustedExchangeRate")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseModel getAdjustedExchangeRate(Quote quote){
+	public ResponseModel getAdjustedExchangeRate(@Valid Quote quote){
 
 		return clientEJB.getAdjustedExchangeRate(quote.getClientId(),
 												 quote.getSourceCurrency(),

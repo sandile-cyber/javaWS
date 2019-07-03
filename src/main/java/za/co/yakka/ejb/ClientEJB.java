@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import za.co.yakka.customException.CannotAddUser;
 import za.co.yakka.customException.UserNotFoundException;
 import za.co.yakka.jpa.Client;
 import za.co.yakka.model.ResponseModel;
@@ -52,7 +53,7 @@ public class ClientEJB {
 
     public Client getClient(int id) throws UserNotFoundException
     {
-    	
+    	logger.info("Looking for client");
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = dbManager.getEntityManager().find(Client.class, id);
 
@@ -68,14 +69,11 @@ public class ClientEJB {
 
     public void updateClient(int id, String name) {
 
+		logger.debug("updating client...");
+
 		Client client = null;
 
-		try{
-			client = getClient(id);
-		}
-		catch (UserNotFoundException e){
-			e.getMessage();
-		}
+		client = getClient(id);
 
 		dbManager.openEntityManagerConnection(persistenceUnit);
 		client.setId(id);
@@ -91,7 +89,6 @@ public class ClientEJB {
 			entityTransaction.commit();
 
 		}
-
 		catch(Exception e){
 
 			e.printStackTrace();
@@ -104,7 +101,7 @@ public class ClientEJB {
 
 	}
 
-    public void addClient(int id, String name) {
+    public void addClient(int id, String name) throws CannotAddUser{
 
     	dbManager.openEntityManagerConnection(persistenceUnit);
     	Client client = new Client();
@@ -118,13 +115,17 @@ public class ClientEJB {
 	    	dbManager.getEntityManager().getTransaction().commit();
 
 	    	logger.debug("client added");
+
     	}
 
     	catch(Exception e) {
 
-    		e.printStackTrace();
+    		throw new CannotAddUser("User with ID already exists");
+
     	}finally {
+
     		dbManager.closeEntityManagerConnection();
+
     	}
 
     }
@@ -134,17 +135,17 @@ public class ClientEJB {
 												String targetCurrency,
 												double sourceAmount){
 
-    	ResponseModel response = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, sourceAmount);
+    	ResponseModel exchangeRateQuote = exchangeRateManager.exchangeRateQuote(sourceCurrency, targetCurrency, sourceAmount);
     	double CAF = exchangeRateManager.adjustmentRate(id, sourceCurrency, targetCurrency);
 
-    	response.setTargetAmount( response.getTargetAmount() + CAF );
+    	exchangeRateQuote.setTargetAmount( exchangeRateQuote.getTargetAmount() + CAF );
 
 		logger.debug("Calculated Currency Adjustment Factor");
 
 		UUID uuid = UUID.randomUUID();
 		String uuidString  = uuid.toString();
-		double targetCurrencyRate = response.getExchangeRate();
-		double sourceCurrencyRate = response.getSourceCurrency();
+		double targetCurrencyRate = exchangeRateQuote.getExchangeRate();
+		double sourceCurrencyRate = exchangeRateQuote.getSourceCurrency();
 
 		quotePersistence.addQuoteInformation(uuidString,
 											id,
@@ -157,7 +158,7 @@ public class ClientEJB {
 
 		logger.debug("Persisted Quote Information...");
 
-    	return response;
+    	return exchangeRateQuote;
 
     }
 }

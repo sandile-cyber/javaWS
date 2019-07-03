@@ -1,8 +1,10 @@
-/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ExchangeRateManager.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/customException/CannotUpdateUser.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ClientApi.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/customException/CannotAddUser.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/ExchangeRateInterface.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/ResponseModel.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/ExchangeRateAdjustmentEJB.java
+/home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/ejb/ExchangeRateManager.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/model/Rate.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/jpa/Client.java
 /home/sandile/eclipse-workspace/rest2/src/main/java/za/co/yakka/utilities/DbManager.java

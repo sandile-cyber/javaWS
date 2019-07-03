@@ -7,11 +7,13 @@ za/co/yakka/utilities/DbManager.class
 za/co/yakka/ejb/QuotePersistenceEJB.class
 za/co/yakka/ejb/ExchangeRateManager.class
 za/co/yakka/cache/GuavaCache$1.class
+za/co/yakka/customException/CannotUpdateUser.class
 za/co/yakka/ejb/ClientEJB.class
 za/co/yakka/utilities/ExchangeRateInterface.class
 za/co/yakka/jpa/Quote.class
 za/co/yakka/MainApplication.class
 za/co/yakka/jpa/CurrencyAdjustment.class
 za/co/yakka/customException/UserNotFoundException.class
+za/co/yakka/customException/CannotAddUser.class
 za/co/yakka/model/FeignResponse.class
 za/co/yakka/cache/GuavaCache.class

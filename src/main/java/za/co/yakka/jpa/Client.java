@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 /**
  * The persistent class for the clients database table.
  * 
  */
+
 @Entity
 @Table(name="clients")
 @NamedQuery(name="Client.findAll", query="SELECT c FROM Client c")
@@ -21,9 +24,11 @@ public class Client implements Serializable {
 
 	@Id
 	@Column(name="id")
+	@NotNull
 	private int id;
 
 	@Column(name="name")
+	@NotBlank
 	private String name;
 
 	public Client() {
